@@ -21,8 +21,8 @@ public class RocketHands extends Item {
     @Override
     public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
         IVRPlayer vrPlayer = VRPlugin.API.getVRPlayer(player);
-        Vector3d c0 = vrPlayer.getController0().getLookVec().multiply(mult, mult, mult);
-        Vector3d c1 = vrPlayer.getController1().getLookVec().multiply(mult, mult, mult);
+        Vector3d c0 = vrPlayer.getController0().getLookAngle().multiply(mult, mult, mult);
+        Vector3d c1 = vrPlayer.getController1().getLookAngle().multiply(mult, mult, mult);
         player.setDeltaMovement(player.getDeltaMovement().add(c0).add(c1));
         if (player.getDeltaMovement().y >= 0) {
             player.fallDistance = 0; // Reset fall distance if we're going up

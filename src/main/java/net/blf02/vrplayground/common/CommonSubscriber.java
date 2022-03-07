@@ -18,6 +18,7 @@ public class CommonSubscriber {
 
     @SubscribeEvent
     public void rightClickOnBlock(PlayerInteractEvent.RightClickBlock event) {
+        // Also send right click if the hand is empty
         if (event.getPlayer().getItemInHand(Hand.MAIN_HAND) == ItemStack.EMPTY) {
             Network.INSTANCE.sendToServer(new EmptyRightClickPacket());
         }

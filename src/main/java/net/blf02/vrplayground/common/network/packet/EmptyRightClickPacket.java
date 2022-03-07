@@ -30,8 +30,8 @@ public class EmptyRightClickPacket {
                 if (sender.inventory.armor.get(3).getItem() == ItemInit.laserHelmet.get()) {
                     IVRPlayer vrPlayer = VRPlugin.API.getVRPlayer(sender);
 
-                    Vector3d pos = vrPlayer.getHMD().getPosition();
-                    Vector3d look = vrPlayer.getHMD().getLookVec();
+                    Vector3d pos = vrPlayer.getHMD().position();
+                    Vector3d look = vrPlayer.getHMD().getLookAngle();
 
                     ShootLaser.shootLaser(sender.level, pos, look, sender);
 
@@ -43,9 +43,6 @@ public class EmptyRightClickPacket {
                     data.putDouble("posX", pos.x);
                     data.putDouble("posY", pos.x);
                     data.putDouble("posZ", pos.x);
-
-                    Network.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> sender),
-                            new ParticlePacket(ParticlePacket.LASER_SHOOT, data));
                 }
             }
         });

@@ -4,7 +4,6 @@ import net.blf02.vrplayground.common.CommonSubscriber;
 import net.blf02.vrplayground.common.init.ItemInit;
 import net.blf02.vrplayground.common.network.Network;
 import net.blf02.vrplayground.common.network.packet.EmptyRightClickPacket;
-import net.blf02.vrplayground.common.network.packet.ParticlePacket;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,8 +32,6 @@ public class VRPlayground {
         int index = 1;
         Network.INSTANCE.registerMessage(index++, EmptyRightClickPacket.class, EmptyRightClickPacket::encode,
                 EmptyRightClickPacket::decode, EmptyRightClickPacket::handle);
-        Network.INSTANCE.registerMessage(index++, ParticlePacket.class, ParticlePacket::encode,
-                ParticlePacket::decode, ParticlePacket::handle);
     }
 
     public static class PlaygroundGroup extends ItemGroup {
