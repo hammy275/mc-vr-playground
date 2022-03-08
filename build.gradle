@@ -116,8 +116,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven {
         name = "blf02"
-        url = "http://blf02.net:4567"
-        allowInsecureProtocol = true
+        url = "https://blf02.net:4567"
     }
 }
 
