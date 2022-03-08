@@ -28,14 +28,6 @@ public class CommonSubscriber {
     }
 
     @SubscribeEvent
-    public void rightClickOnBlock(PlayerInteractEvent.RightClickBlock event) {
-        // Also send right click if the hand is empty
-        if (event.getPlayer().getItemInHand(Hand.MAIN_HAND) == ItemStack.EMPTY) {
-            Network.INSTANCE.sendToServer(new EmptyRightClickPacket());
-        }
-    }
-
-    @SubscribeEvent
     public void immersiveFurnace(VRPlayerTickEvent event) {
         Vector3d controller = event.vrPlayer.getController0().position(); // Get info about main controller position
         BlockPos pos = new BlockPos(controller); // Get block position from controller position
