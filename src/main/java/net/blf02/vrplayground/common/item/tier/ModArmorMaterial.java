@@ -1,5 +1,6 @@
 package net.blf02.vrplayground.common.item.tier;
 
+import net.blf02.vrplayground.VRPlayground;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
@@ -22,7 +23,7 @@ public class ModArmorMaterial implements IArmorMaterial {
 
     public ModArmorMaterial(String id, int durabilityFactor, int[] armorValuesBootsToHelm, int enchantability,
                             SoundEvent equipSound, float toughness, float kbResistance, Supplier<Item> repairMaterial) {
-        this.name = id;
+        this.name = VRPlayground.MOD_ID + ":" + id;
         this.durabilityFactor = durabilityFactor;
         this.armorValues = armorValuesBootsToHelm;
         this.enchantability = enchantability;
