@@ -1,6 +1,7 @@
 package net.blf02.vrplayground.common.init;
 
 import net.blf02.vrplayground.VRPlayground;
+import net.blf02.vrplayground.common.item.LaserHands;
 import net.blf02.vrplayground.common.item.RocketHands;
 import net.blf02.vrplayground.common.item.tier.ModArmorMaterial;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -19,8 +20,10 @@ public class ItemInit {
 
     public static final RegistryObject<Item> rocketHands = ITEMS.register("rocket_hands", () ->
             new RocketHands(new Item.Properties().stacksTo(1).tab(VRPlayground.creativeGroup)));
+    public static final RegistryObject<Item> laserHands = ITEMS.register("laser_hands", () ->
+            new LaserHands(new Item.Properties().stacksTo(1).tab(VRPlayground.creativeGroup)));
 
-    public static final IArmorMaterial laserHelmetMat = new ModArmorMaterial("laser_mat", 20, new int[]{1, 3, 4, 2},
+    public static final IArmorMaterial laserHelmetMat = new ModArmorMaterial("laser", 20, new int[]{1, 3, 4, 2},
             1, SoundEvents.ARMOR_EQUIP_IRON, 0, 0, () -> Items.IRON_INGOT);
     public static final RegistryObject<Item> laserHelmet = ITEMS.register("laser_helmet", () ->
             new ArmorItem(laserHelmetMat, EquipmentSlotType.HEAD,
