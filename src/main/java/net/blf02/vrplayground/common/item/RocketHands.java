@@ -20,13 +20,22 @@ public class RocketHands extends Item {
 
     @Override
     public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
-        IVRPlayer vrPlayer = VRPlugin.API.getVRPlayer(player);
+        // Return early if player isn't in VR.
+        if (!VRPlugin.API.playerInVR(player)) return ActionResult.fail(player.getItemInHand(hand));
+
+        IVRPlayer vrPlayer = VRPlugin.API.getVRPlayer(player); // Get VR Player instance
+
+        // Get the direction each controller is pointing, flip it backwards, then shrink it
         Vector3d c0 = vrPlayer.getController0().getLookAngle().multiply(mult, mult, mult);
         Vector3d c1 = vrPlayer.getController1().getLookAngle().multiply(mult, mult, mult);
+
+        // Add the flipped, shrunken controller direction to our movement
         player.setDeltaMovement(player.getDeltaMovement().add(c0).add(c1));
+
+        // If we're currently moving up, cancel our fall damage
         if (player.getDeltaMovement().y >= 0) {
             player.fallDistance = 0; // Reset fall distance if we're going up
         }
-        return ActionResult.fail(player.getItemInHand(hand));
+        return ActionResult.success(player.getItemInHand(hand));
     }
 }
