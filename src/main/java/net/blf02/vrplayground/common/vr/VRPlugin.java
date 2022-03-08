@@ -3,6 +3,8 @@ package net.blf02.vrplayground.common.vr;
 import net.blf02.vrapi.api.IVRAPI;
 import net.blf02.vrapi.api.VRAPIPlugin;
 import net.blf02.vrapi.api.VRAPIPluginProvider;
+import net.blf02.vrplayground.common.CommonSubscriber;
+import net.minecraftforge.common.MinecraftForge;
 
 @VRAPIPlugin
 public class VRPlugin implements VRAPIPluginProvider {
@@ -17,5 +19,8 @@ public class VRPlugin implements VRAPIPluginProvider {
     public void getVRAPI(IVRAPI ivrapi) {
         API = ivrapi; // Set our VR API instance so our mod can use it
         //VRPluginChecker.isVRLoaded = true;
+
+        // Since our subscriber uses VR events, we should only register it if the API is detected
+        MinecraftForge.EVENT_BUS.register(new CommonSubscriber());
     }
 }

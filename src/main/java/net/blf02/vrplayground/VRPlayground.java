@@ -24,8 +24,6 @@ public class VRPlayground {
         bus.addListener(this::commonSetup);
 
         ItemInit.ITEMS.register(bus);
-
-        MinecraftForge.EVENT_BUS.register(new CommonSubscriber());
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
