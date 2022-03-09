@@ -24,6 +24,7 @@ public class ShootLaser {
             List<Entity> hits = level.getEntities(shooter, hit);
             for (Entity e : hits) {
                 e.hurt(DamageSource.playerAttack(shooter), 7); // Hardcoded 7 damage
+                e.setSecondsOnFire(4);
             }
         }
     }

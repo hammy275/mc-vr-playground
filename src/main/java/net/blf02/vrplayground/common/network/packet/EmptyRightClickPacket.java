@@ -1,5 +1,6 @@
 package net.blf02.vrplayground.common.network.packet;
 
+import net.blf02.vrapi.api.data.IVRData;
 import net.blf02.vrapi.api.data.IVRPlayer;
 import net.blf02.vrplayground.common.init.ItemInit;
 import net.blf02.vrplayground.common.network.Network;
@@ -30,19 +31,10 @@ public class EmptyRightClickPacket {
                 if (sender.inventory.armor.get(3).getItem() == ItemInit.laserHelmet.get()) {
                     IVRPlayer vrPlayer = VRPlugin.API.getVRPlayer(sender);
 
-                    Vector3d pos = vrPlayer.getHMD().position();
-                    Vector3d look = vrPlayer.getHMD().getLookAngle();
-
-                    ShootLaser.shootLaser(sender.level, pos, look, sender);
-
-                    CompoundNBT data = new CompoundNBT();
-                    data.putDouble("lookX", look.x);
-                    data.putDouble("lookY", look.y);
-                    data.putDouble("lookZ", look.z);
-
-                    data.putDouble("posX", pos.x);
-                    data.putDouble("posY", pos.x);
-                    data.putDouble("posZ", pos.x);
+                    for (int i = 0; i <= 1; i++) { // Iterate for eyes 0 and 1 (left and right)
+                        IVRData eye = vrPlayer.getEye(i);
+                        ShootLaser.shootLaser(sender.level, eye.position(), eye.getLookAngle(), sender);
+                    }
                 }
             }
         });
