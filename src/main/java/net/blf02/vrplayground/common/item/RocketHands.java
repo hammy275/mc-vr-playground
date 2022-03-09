@@ -58,7 +58,10 @@ public class RocketHands extends Item {
                         look.x, look.y, look.z, // Spreading out in the direction of our controller
                         0); // Make the particle not move
             }
-
+        } else {
+            for (int i = 0; i <= 1; i++) { // For both controllers
+                VRPlugin.API.triggerHapticPulse(i, 0.25f, null); // Rumble controller for 0.25 secs
+            }
         }
         return ActionResult.success(player.getItemInHand(hand));
     }

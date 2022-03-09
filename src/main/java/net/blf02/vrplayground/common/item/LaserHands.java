@@ -30,6 +30,12 @@ public class LaserHands extends Item {
             if (player.inventory.armor.get(3).getItem() == ItemInit.laserHelmet.get()) {
                 Network.INSTANCE.sendToServer(new EmptyRightClickPacket());
             }
+
+            // Rumble both controllers as we shoot our laser
+            for (int i = 0; i <= 1; i++) { // For both controllers
+                VRPlugin.API.triggerHapticPulse(i, 0.25f, null); // Rumble controller for 0.25 secs
+            }
+
             return ActionResult.pass(player.getItemInHand(hand)); // Return if we're on the client side
         }
 
