@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ShootLaser {
 
@@ -17,8 +18,11 @@ public class ShootLaser {
         if (!(level instanceof ServerWorld)) return;
         for (int i = 0; i < 100; i++) {
             pos = pos.add(lookVec);
-            ((ServerWorld) level).sendParticles(new RedstoneParticleData(1, 0, 0, 1),
-                    pos.x, pos.y, pos.z, 1,0,0, 0, 0);
+            // 25% chance to display a given particle
+            if (ThreadLocalRandom.current().nextInt(4) == 0) {
+                ((ServerWorld) level).sendParticles(new RedstoneParticleData(1, 0, 0, 1),
+                        pos.x, pos.y, pos.z, 1,0,0, 0, 0);
+            }
             AxisAlignedBB hit = new AxisAlignedBB(pos.add(-0.5, -0.5, -0.5),
                     pos.add(0.5, 0.5, 0.5));
             List<Entity> hits = level.getEntities(shooter, hit);

@@ -6,6 +6,7 @@ import net.blf02.vrplayground.common.init.ItemInit;
 import net.blf02.vrplayground.common.network.Network;
 import net.blf02.vrplayground.common.network.packet.EmptyRightClickPacket;
 import net.blf02.vrplayground.common.util.ShootLaser;
+import net.blf02.vrplayground.common.util.Util;
 import net.blf02.vrplayground.common.vr.VRPlugin;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -33,8 +34,10 @@ public class LaserHands extends Item {
 
             // Rumble both controllers as we shoot our laser
             for (int i = 0; i <= 1; i++) { // For both controllers
-                VRPlugin.API.triggerHapticPulse(i, 0.25f, null); // Rumble controller for 0.25 secs
+                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 0.25 secs
             }
+
+            Util.cancelRightClickCooldown(); // Cancel right click cooldown so we can immediately click again next tick
 
             return ActionResult.pass(player.getItemInHand(hand)); // Return if we're on the client side
         }

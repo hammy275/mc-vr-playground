@@ -2,6 +2,7 @@ package net.blf02.vrplayground.common.item;
 
 import net.blf02.vrapi.api.data.IVRData;
 import net.blf02.vrapi.api.data.IVRPlayer;
+import net.blf02.vrplayground.common.util.Util;
 import net.blf02.vrplayground.common.vr.VRPlugin;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class RocketHands extends Item {
 
-    public static final double mult = -0.25;
+    public static final double mult = -1d/16d;
 
     public RocketHands(Properties properties) {
         super(properties);
@@ -40,7 +41,7 @@ public class RocketHands extends Item {
             player.fallDistance = 0; // Reset fall distance if we're going up
         }
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide && player.tickCount % 4 == 0) { // Only show particles 5 times a second
             ServerWorld serverLevel = (ServerWorld) level;
             for (int i = 0; i <= 1; i++) {
                 IVRData controller = vrPlayer.getController(i); // Get controller number i (0 and 1)
@@ -58,10 +59,11 @@ public class RocketHands extends Item {
                         look.x, look.y, look.z, // Spreading out in the direction of our controller
                         0); // Make the particle not move
             }
-        } else {
+        } else if (level.isClientSide) {
             for (int i = 0; i <= 1; i++) { // For both controllers
-                VRPlugin.API.triggerHapticPulse(i, 0.25f, null); // Rumble controller for 0.25 secs
+                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 0.25 secs
             }
+            Util.cancelRightClickCooldown(); // Cancel right click so we can click again next tick
         }
         return ActionResult.success(player.getItemInHand(hand));
     }

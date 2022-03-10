@@ -4,6 +4,7 @@ import net.blf02.vrapi.event.VRPlayerTickEvent;
 import net.blf02.vrplayground.common.network.Network;
 import net.blf02.vrplayground.common.network.packet.EmptyRightClickPacket;
 import net.blf02.vrplayground.common.util.PlayerTracker;
+import net.blf02.vrplayground.common.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ public class CommonSubscriber {
     @SubscribeEvent
     public void emptyRightClick(PlayerInteractEvent.RightClickEmpty event) {
         Network.INSTANCE.sendToServer(new EmptyRightClickPacket());
+        Util.cancelRightClickCooldown(); // Cancel right click so we can click again next tick
     }
 
     @SubscribeEvent
