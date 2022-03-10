@@ -3,7 +3,7 @@ package net.blf02.vrplayground.common.vr;
 import net.blf02.vrapi.api.IVRAPI;
 import net.blf02.vrapi.api.VRAPIPlugin;
 import net.blf02.vrapi.api.VRAPIPluginProvider;
-import net.blf02.vrplayground.common.CommonSubscriber;
+import net.blf02.vrplayground.common.subscribe.CommonSubscriber;
 import net.minecraftforge.common.MinecraftForge;
 
 @VRAPIPlugin

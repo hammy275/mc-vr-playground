@@ -1,12 +1,10 @@
 package net.blf02.vrplayground;
 
-import net.blf02.vrplayground.common.CommonSubscriber;
 import net.blf02.vrplayground.common.init.ItemInit;
 import net.blf02.vrplayground.common.network.Network;
 import net.blf02.vrplayground.common.network.packet.EmptyRightClickPacket;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
