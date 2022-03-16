@@ -1,6 +1,7 @@
 package net.blf02.vrplayground.common.init;
 
 import net.blf02.vrplayground.VRPlayground;
+import net.blf02.vrplayground.common.item.Force;
 import net.blf02.vrplayground.common.item.LaserHands;
 import net.blf02.vrplayground.common.item.RocketHands;
 import net.blf02.vrplayground.common.item.tier.ModArmorMaterial;
@@ -28,5 +29,8 @@ public class ItemInit {
     public static final RegistryObject<Item> laserHelmet = ITEMS.register("laser_helmet", () ->
             new ArmorItem(laserHelmetMat, EquipmentSlotType.HEAD,
                     new Item.Properties().tab(VRPlayground.creativeGroup)));
+
+    public static final RegistryObject<Item> force = ITEMS.register("force", () ->
+            new Force(new Item.Properties().tab(VRPlayground.creativeGroup).stacksTo(1)));
 
 }

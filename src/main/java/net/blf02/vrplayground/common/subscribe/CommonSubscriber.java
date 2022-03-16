@@ -1,6 +1,7 @@
 package net.blf02.vrplayground.common.subscribe;
 
 import net.blf02.vrapi.event.VRPlayerTickEvent;
+import net.blf02.vrplayground.common.data.ForceInformation;
 import net.blf02.vrplayground.common.network.Network;
 import net.blf02.vrplayground.common.network.packet.EmptyRightClickPacket;
 import net.blf02.vrplayground.common.util.PlayerTracker;
@@ -12,6 +13,7 @@ import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -24,6 +26,17 @@ public class CommonSubscriber {
     public void emptyRightClick(PlayerInteractEvent.RightClickEmpty event) {
         Network.INSTANCE.sendToServer(new EmptyRightClickPacket());
         Util.cancelRightClickCooldown(); // Cancel right click so we can click again next tick
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+        ForceInformation info = PlayerTracker.forceInfo.get(event.player.getGameProfile().getName());
+        if (info == null) return;
+        boolean shouldRemove = info.tick();
+        if (shouldRemove) {
+            PlayerTracker.forceInfo.remove(event.player.getGameProfile().getName());
+        }
     }
 
     @SubscribeEvent
