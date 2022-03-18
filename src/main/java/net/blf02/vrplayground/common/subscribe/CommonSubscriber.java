@@ -29,7 +29,7 @@ public class CommonSubscriber {
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public void onVRPlayerTick(VRPlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         ForceInformation info = PlayerTracker.forceInfo.get(event.player.getGameProfile().getName());
         if (info == null) return;
