@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -36,9 +37,9 @@ public class ForceInformation {
         if (target1 != null) this.target1Dist = player.distanceTo(target1);
     }
 
-    // Ensures that the initial targets are "good" (not bosses basically)
+    // Ensures that the initial targets are "good" (not bosses or yourself basically)
     protected LivingEntity getValidTarget(LivingEntity potentialTarget) {
-        if (potentialTarget == null) {
+        if (potentialTarget == null || potentialTarget == player) {
             return null;
         } else if (potentialTarget.getMaxHealth() > 50) {
             return null;
@@ -68,12 +69,32 @@ public class ForceInformation {
         processVictim(target0, vrPlayer.getController0(), target0Dist);
         processVictim(target1, vrPlayer.getController1(), target1Dist);
 
+        ServerPlayerEntity serverPlayer = player instanceof ServerPlayerEntity ? (ServerPlayerEntity) player : null;
+
+        // Haptic feedback
+        for (int c = 0; c <= 1; c++) { // For both controllers
+            LivingEntity target = c == 0 ? target0 : target1;
+            if (target != null) { // If the hand is holding a target
+                // Vibrate for 1 tick at a frequency of 40 with 0 amplitude and 0 delay
+                if (serverPlayer != null) {
+                    VRPlugin.API.triggerHapticPulse(c, 0.05f, serverPlayer);
+                }
+            }
+        }
+
+
         // If controller 0's target is null but the controller is hovering over 1's target
         // The else if does the same vice-versa
         if (target0 == null && target1 != null && traceToFirstMob(player, vrPlayer.getController0(), 50) == target1) {
             processBothHandsVictim(target1);
+            if (serverPlayer != null) { // Vibrate controller 0 if it's hurting a mob but isn't holding one
+                VRPlugin.API.triggerHapticPulse(0, 0.05f, (ServerPlayerEntity) player);
+            }
         } else if (target1 == null && target0 != null && traceToFirstMob(player, vrPlayer.getController1(), 50) == target0) {
             processBothHandsVictim(target0);
+            if (serverPlayer != null) { // Vibrate controller 1 if it's hurting a mob but isn't holding one
+                VRPlugin.API.triggerHapticPulse(1, 0.05f, (ServerPlayerEntity) player);
+            }
         }
 
         // Don't want to delete, so return false
