@@ -17,24 +17,24 @@ public class Force extends Item {
 
     @Override
     public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
-        if (level.isClientSide) return super.use(level, player, hand);
+        if (level.isClientSide) return ActionResult.pass(player.getItemInHand(hand)); // Return if on client side
+        // Gets information about the currently active force instance (if one exists)
         ForceInformation info = PlayerTracker.forceInfo.get(player.getGameProfile().getName());
+
         if (info == null) {
-            info = ForceInformation.createForceInteraction(player);
+            info = ForceInformation.createForceInteraction(player); // If we don't have an instance, create one
             if (info == null) {
-                return super.use(level, player, hand);
+                // If we still don't have one, we couldn't create an instance (player isn't in VR or isn't
+                // targeting any mobs)
+                return ActionResult.pass(player.getItemInHand(hand));
             }
+            // Add our instance to the tracker
             PlayerTracker.forceInfo.put(player.getGameProfile().getName(), info);
         } else {
+            // If we're already using the force, we remove it when the player right clicks again
             PlayerTracker.forceInfo.remove(player.getGameProfile().getName());
-            return super.use(level, player, hand);
+            return ActionResult.pass(player.getItemInHand(hand));
         }
-
         return super.use(level, player, hand);
-    }
-
-    @Override
-    public int getUseDuration(ItemStack p_77626_1_) {
-        return 72000;
     }
 }

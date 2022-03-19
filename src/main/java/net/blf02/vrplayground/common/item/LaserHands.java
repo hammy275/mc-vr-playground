@@ -34,7 +34,7 @@ public class LaserHands extends Item {
 
             // Rumble both controllers as we shoot our laser
             for (int i = 0; i <= 1; i++) { // For both controllers
-                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 0.25 secs
+                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 1 tick
             }
 
             Util.cancelRightClickCooldown(); // Cancel right click cooldown so we can immediately click again next tick

@@ -61,7 +61,7 @@ public class RocketHands extends Item {
             }
         } else if (level.isClientSide) {
             for (int i = 0; i <= 1; i++) { // For both controllers
-                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 0.25 secs
+                VRPlugin.API.triggerHapticPulse(i, 0.05f, null); // Rumble controller for 1 tick
             }
             Util.cancelRightClickCooldown(); // Cancel right click so we can click again next tick
         }
