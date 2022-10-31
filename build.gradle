@@ -116,8 +116,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        name = "blf02"
-        url = "https://blf02.net:4567"
+        url = "https://cursemaven.com"
     }
 }
 
@@ -127,8 +126,8 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.20'
 
-    compileOnly fg.deobf("net.blf02:vrapi:1.1.0")
-    runtimeOnly fg.deobf("net.blf02:vrapi:1.1.0")
+    compileOnly fg.deobf("curse.maven:mcvrapi-591092:3683201")
+    runtimeOnly fg.deobf("curse.maven:mcvrapi-591092:3683201")
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
