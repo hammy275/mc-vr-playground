@@ -1,7 +1,0 @@
-{
-    "pack": {
-        "description": "VRPlayground Resources",
-        "pack_format": 6,
-        "_comment": "Resources for VRPlayground. Should probably leave this on."
-    }
-}

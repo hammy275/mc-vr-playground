@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "mc_vr_playground:item/rocket_hands"
+  }
+}

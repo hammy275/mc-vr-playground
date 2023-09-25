@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+#issueTrackerURL = ""
+license = "MIT License"
+
+[[mods]]
+modId = "mc_vr_playground"
+version = "${version}"
+displayName = "MC VR Playground"
+authors = "hammy275"
+description = '''
+Demo mod for Vivecraft API
+'''
+#logoFile = ""
+
+[[dependencies.mc_vr_playground]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mc_vr_playground]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mc_vr_playground]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.1.12,)"
+ordering = "AFTER"
+side = "BOTH"
