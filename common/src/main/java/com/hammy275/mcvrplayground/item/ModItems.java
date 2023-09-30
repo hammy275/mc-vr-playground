@@ -24,4 +24,6 @@ public class ModItems {
 
     public static final RegistrySupplier<Item> ROCKET_HANDS = ITEMS.register("rocket_hands", () ->
             new RocketHands(new Item.Properties().arch$tab(CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> MAGIC_MISSILE = ITEMS.register("magic_missile", () ->
+            new MagicMissileItem(new Item.Properties().arch$tab(CREATIVE_TAB)));
 }

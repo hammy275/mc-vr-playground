@@ -3,5 +3,8 @@
 
   "category.mc_vr_playground": "MC VR Playground",
 
+  "entity.mc_vr_playground.magic_missile": "Magic Missile",
+
+  "item.mc_vr_playground.magic_missile": "Magic Missile",
   "item.mc_vr_playground.rocket_hands": "Rocket Hands"
 }

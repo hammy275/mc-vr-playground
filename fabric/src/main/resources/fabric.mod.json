@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "com.hammy275.mcvrplayground.MCVRPlaygroundFabric"
+    ],
+    "client": [
+      "com.hammy275.mcvrplayground.MCVRPlaygroundClientFabric"
     ]
   },
   "depends": {

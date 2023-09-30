@@ -17,6 +17,9 @@
     "entrypoints": {
       "init": [
         "com.hammy275.mcvrplayground.MCVRPlaygroundQuilt"
+      ],
+      "client": [
+        "com.hammy275.mcvrplayground.MCVRPlaygroundClientQuilt"
       ]
     },
     "depends": [

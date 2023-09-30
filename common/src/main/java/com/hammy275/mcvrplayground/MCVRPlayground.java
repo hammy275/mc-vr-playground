@@ -1,5 +1,6 @@
 package com.hammy275.mcvrplayground;
 
+import com.hammy275.mcvrplayground.entity.ModEntities;
 import com.hammy275.mcvrplayground.item.ModItems;
 
 public class MCVRPlayground {
@@ -9,5 +10,6 @@ public class MCVRPlayground {
     public static void init() {
         ModItems.TABS.register();
         ModItems.ITEMS.register();
+        ModEntities.ENTITIES.register();
     }
 }
