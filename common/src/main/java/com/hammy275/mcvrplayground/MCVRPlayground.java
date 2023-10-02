@@ -1,7 +1,7 @@
 package com.hammy275.mcvrplayground;
 
-import com.hammy275.mcvrplayground.entity.ModEntities;
-import com.hammy275.mcvrplayground.item.ModItems;
+import com.hammy275.mcvrplayground.common.entity.ModEntities;
+import com.hammy275.mcvrplayground.common.item.ModItems;
 
 public class MCVRPlayground {
 

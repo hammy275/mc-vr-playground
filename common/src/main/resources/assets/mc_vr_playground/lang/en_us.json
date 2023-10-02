@@ -5,6 +5,11 @@
 
   "entity.mc_vr_playground.magic_missile": "Magic Missile",
 
+  "item.mc_vr_playground.history_visualizer": "History Visualizer",
+  "item.mc_vr_playground.history_visualizer.right_click": "Use this item to change which device is visualized.",
+  "item.mc_vr_playground.history_visualizer.visualizing.0": "Mode set to controller 0 (the primary controller).",
+  "item.mc_vr_playground.history_visualizer.visualizing.1": "Mode set to controller 1 (the secondary controller).",
+  "item.mc_vr_playground.history_visualizer.visualizing.2": "Mode set to the HMD.",
   "item.mc_vr_playground.magic_missile": "Magic Missile",
   "item.mc_vr_playground.rocket_hands": "Rocket Hands"
 }
