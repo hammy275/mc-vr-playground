@@ -26,7 +26,11 @@ public class ModItems {
             new RocketHands(new Item.Properties().arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> MAGIC_MISSILE = ITEMS.register("magic_missile", () ->
             new MagicMissileItem(new Item.Properties().arch$tab(CREATIVE_TAB)));
-
     public static final RegistrySupplier<Item> HISTORY_VISUALIZER = ITEMS.register("history_visualizer", () ->
             new HistoryVisualizer(new Item.Properties().arch$tab(CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> KEYBOARDINATOR = ITEMS.register("keyboardinator", () ->
+            new KeyboardInatorItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> DEBUG_INFO = ITEMS.register("debug_info", () ->
+            new DebugInfoItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
+
 }

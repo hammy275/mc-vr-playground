@@ -11,5 +11,11 @@
   "item.mc_vr_playground.history_visualizer.visualizing.1": "Mode set to controller 1 (the secondary controller).",
   "item.mc_vr_playground.history_visualizer.visualizing.2": "Mode set to the HMD.",
   "item.mc_vr_playground.magic_missile": "Magic Missile",
-  "item.mc_vr_playground.rocket_hands": "Rocket Hands"
+  "item.mc_vr_playground.rocket_hands": "Rocket Hands",
+  "item.mc_vr_playground.keyboardinator": "Keyboard-inator",
+  "item.mc_vr_playground.debug_info": "Debug Info",
+  "item.mc_vr_playground.debug_info.server_title": "Server Data",
+  "item.mc_vr_playground.debug_info.client_title": "Client Data",
+  "item.mc_vr_playground.debug_info.not_in_vr": "Server thinks you are not in VR.",
+  "item.mc_vr_playground.debug_info.vr_not_active": "Cannot retrieve world scale as you are not in VR."
 }
