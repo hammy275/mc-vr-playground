@@ -25,11 +25,7 @@ public class DebugInfoItem extends Item {
             player.sendSystemMessage(Component.literal("usingReversedHands(): " + VivecraftClientAPI.getInstance().usingReversedHands()));
             player.sendSystemMessage(Component.literal("isVrInitialized(): " + VivecraftClientAPI.getInstance().isVrInitialized()));
             player.sendSystemMessage(Component.literal("isVrActive(): " + VivecraftClientAPI.getInstance().isVrActive()));
-            if (VivecraftClientAPI.getInstance().isVrActive()) {
-                player.sendSystemMessage(Component.literal("getWorldScale(): " + VivecraftClientAPI.getInstance().getWorldScale()));
-            } else {
-                player.sendSystemMessage(Component.translatable("item.mc_vr_playground.debug_info.vr_not_active"));
-            }
+            player.sendSystemMessage(Component.literal("getWorldScale(): " + VivecraftClientAPI.getInstance().getWorldScale()));
         } else {
             VRData data = VivecraftAPI.getInstance().getVRData(player);
             if (data != null) { // If it's null, we weren't in VR according to the server.

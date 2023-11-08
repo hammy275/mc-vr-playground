@@ -16,6 +16,5 @@
   "item.mc_vr_playground.debug_info": "Debug Info",
   "item.mc_vr_playground.debug_info.server_title": "Server Data",
   "item.mc_vr_playground.debug_info.client_title": "Client Data",
-  "item.mc_vr_playground.debug_info.not_in_vr": "Server thinks you are not in VR.",
-  "item.mc_vr_playground.debug_info.vr_not_active": "Cannot retrieve world scale as you are not in VR."
+  "item.mc_vr_playground.debug_info.not_in_vr": "Server thinks you are not in VR."
 }
