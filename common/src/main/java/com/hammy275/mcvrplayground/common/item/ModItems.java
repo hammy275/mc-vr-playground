@@ -32,5 +32,7 @@ public class ModItems {
             new KeyboardInatorItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> DEBUG_INFO = ITEMS.register("debug_info", () ->
             new DebugInfoItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> DATA_PRINTER = ITEMS.register("data_printer", () ->
+            new DataPrinter(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
 
 }
