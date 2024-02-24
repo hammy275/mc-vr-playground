@@ -26,6 +26,9 @@ public class DebugInfoItem extends Item {
             player.sendSystemMessage(Component.literal("isVrInitialized(): " + VivecraftClientAPI.getInstance().isVrInitialized()));
             player.sendSystemMessage(Component.literal("isVrActive(): " + VivecraftClientAPI.getInstance().isVrActive()));
             player.sendSystemMessage(Component.literal("getWorldScale(): " + VivecraftClientAPI.getInstance().getWorldScale()));
+            player.sendSystemMessage(Component.literal("isVanillaRenderPass(): " + VivecraftClientAPI.getInstance().isVanillaRenderPass()));
+            player.sendSystemMessage(Component.literal("getCurrentRenderPass(): " + VivecraftClientAPI.getInstance().getCurrentRenderPass()));
+            player.sendSystemMessage(Component.literal("isFirstRenderPass(): " + VivecraftClientAPI.getInstance().isFirstRenderPass()));
         } else {
             VRData data = VivecraftAPI.getInstance().getVRData(player);
             if (data != null) { // If it's null, we weren't in VR according to the server.
