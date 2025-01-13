@@ -37,7 +37,7 @@ public class HistoryVisualizer extends Item {
 
         // Check that we are on the client side and that the player is in VR before attempting to visualize history
         if (entity.level().isClientSide &&
-                VivecraftClientAPI.getInstance().isVrActive()) {
+                VivecraftClientAPI.getInstance().isVRActive()) {
             HistoryVisualizerClientTick.tick(itemStack, entity); // Do the actual logic
         }
     }

@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.vivecraft.api.VivecraftAPI;
 import org.vivecraft.api.client.VivecraftClientAPI;
-import org.vivecraft.api.data.VRData;
+import org.vivecraft.api.data.VRPose;
 
 public class RocketHands extends Item {
 
@@ -42,7 +42,7 @@ public class RocketHands extends Item {
         // Check that we have a player and that the player is in VR
         if (livingEntity instanceof Player player && VivecraftAPI.getInstance().isVRPlayer(player)) {
             // Get VR-related data for the player
-            VRData vrData = VivecraftAPI.getInstance().getVRData(player);
+            VRPose vrData = VivecraftAPI.getInstance().getVRPose(player);
 
             // Get the direction both their controllers are pointing
             Vec3 c0Dir = vrData.getController0().getRot();

@@ -15,7 +15,7 @@ public class KeyboardInatorItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        boolean inVR = VivecraftClientAPI.getInstance().isVrActive();
+        boolean inVR = VivecraftClientAPI.getInstance().isVRActive();
         if (inVR) {
             VivecraftClientAPI.getInstance().setKeyboardState(true);
         }

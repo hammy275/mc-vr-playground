@@ -21,14 +21,7 @@ public class HistoryVisualizerClientTick {
             // Item stores which device (HMD or a controller) we're visualizing in its NBT data
             HistoryVisualizer.VisualizerMode mode = HistoryVisualizer.getMode(itemStack);
 
-            VRPoseHistory history;
-            if (mode == HistoryVisualizer.VisualizerMode.HMD) {
-                // Get the history data for the HMD
-                history = VivecraftClientAPI.getInstance().getHistoricalVRHMDPoses();
-            } else {
-                // Get the history data for either controller 0 or controller 1
-                history = VivecraftClientAPI.getInstance().getHistoricalVRControllerPoses(mode.ordinal());
-            }
+            VRPoseHistory history = VivecraftClientAPI.getInstance().getHistoricalVRPoses();
 
             for (int i = 0; i < history.ticksOfHistory(); i++) {
                 // This makes the particle larger the farther it is away from the player.
@@ -36,7 +29,7 @@ public class HistoryVisualizerClientTick {
                 // (which is always history.ticksOfHistory() - 1) is the oldest known position.
                 float particleSize = (i + 1) * (1f / VRPoseHistory.MAX_TICKS_BACK);
                 VRPose entry = history.getHistoricalData(i); // Get the entry from our history
-                Vec3 entryPos = entry.getPos(); // Get the position of said history entry
+                Vec3 entryPos = mode == HistoryVisualizer.VisualizerMode.HMD ? entry.getHMD().getPos() : entry.getController(mode.ordinal()).getPos(); // Get the position of said history entry
                 entity.level().addParticle(
                         new DustParticleOptions(new Vector3f(1f, 0.5f, 0f), particleSize),
                         entryPos.x(), entryPos.y(), entryPos.z(),

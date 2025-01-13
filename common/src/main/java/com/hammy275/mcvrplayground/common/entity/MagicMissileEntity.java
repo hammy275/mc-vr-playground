@@ -18,7 +18,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 import org.vivecraft.api.VivecraftAPI;
-import org.vivecraft.api.data.VRPose;
+import org.vivecraft.api.data.VRBodyPartData;
 
 public class MagicMissileEntity extends Projectile implements ItemSupplier {
     public static final EntityDataAccessor<Float> ROLL = SynchedEntityData.defineId(MagicMissileEntity.class,
@@ -31,7 +31,7 @@ public class MagicMissileEntity extends Projectile implements ItemSupplier {
     @Nullable
     public static MagicMissileEntity create(Player owner) {
         if (VivecraftAPI.getInstance().isVRPlayer(owner)) {
-            VRPose hand = VivecraftAPI.getInstance().getVRData(owner).getController0();
+            VRBodyPartData hand = VivecraftAPI.getInstance().getVRPose(owner).getController0();
 
             MagicMissileEntity missile = new MagicMissileEntity(ModEntities.magicMissile.get(), owner.level());
             // Move missile 1 block ahead of player's hand in the direction the hand is pointing
@@ -50,7 +50,7 @@ public class MagicMissileEntity extends Projectile implements ItemSupplier {
         super.tick();
         if (this.getOwner() instanceof Player owner && VivecraftAPI.getInstance().isVRPlayer(owner)) {
             // Owner is online and in VR!
-            VRPose hand = VivecraftAPI.getInstance().getVRData(owner).getController0();
+            VRBodyPartData hand = VivecraftAPI.getInstance().getVRPose(owner).getController0();
             // Set the roll value of this entity to the roll of the controller
             this.entityData.set(ROLL, (float) hand.getRoll()); // This is cast to float, since ROLL expects a float
             // Move 0.2 blocks in direction that hand is pointing
