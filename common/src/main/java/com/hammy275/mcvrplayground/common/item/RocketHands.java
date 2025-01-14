@@ -45,12 +45,12 @@ public class RocketHands extends Item {
             VRPose vrData = VivecraftAPI.getInstance().getVRPose(player);
 
             // Get the direction both their controllers are pointing
-            Vec3 c0Dir = vrData.getController0().getRot();
-            Vec3 c1Dir = vrData.getController1().getRot();
+            Vec3 mainHandDir = vrData.getMainHand().getRot();
+            Vec3 offHandDir = vrData.getOffHand().getRot();
 
             // Decrease the magnitude of and flip the direction of where the controllers are pointing
-            Vec3 c0DeltaMovementAdd = c0Dir.scale(ROCKET_MULT);
-            Vec3 c1DeltaMovementAdd = c1Dir.scale(ROCKET_MULT);
+            Vec3 c0DeltaMovementAdd = mainHandDir.scale(ROCKET_MULT);
+            Vec3 c1DeltaMovementAdd = offHandDir.scale(ROCKET_MULT);
 
             // Add the modified controller direction as velocity to the player
             player.setDeltaMovement(player.getDeltaMovement().add(c0DeltaMovementAdd).add(c1DeltaMovementAdd));
@@ -66,23 +66,23 @@ public class RocketHands extends Item {
                     VivecraftClientAPI.getInstance().triggerHapticPulse(controllerNum, 0.05f);
 
                     // Show particles coming out of the controller
-                    Vec3 controllerPos = vrData.getController(controllerNum).getPos();
-                    Vec3 controllerDir = vrData.getController(controllerNum).getRot();
+                    Vec3 handPos = vrData.getHand(controllerNum).getPos();
+                    Vec3 handDir = vrData.getHand(controllerNum).getRot();
 
                     for (int j = 0; j < 4; j++) { // Add 4 smoke particles
                         player.level().addParticle(
                             ParticleTypes.SMOKE,
-                            controllerPos.x(), controllerPos.y(), controllerPos.z(),
+                            handPos.x(), handPos.y(), handPos.z(),
                             // Using the controller rotation below as the spread of the particle works well
-                            controllerDir.x(), controllerDir.y(), controllerDir.z()
+                            handDir.x(), handDir.y(), handDir.z()
                         );
                     }
 
                     player.level().addParticle( // Add 1 flame particle
                         ParticleTypes.FLAME,
-                        controllerPos.x(), controllerPos.y(), controllerPos.z(),
+                        handPos.x(), handPos.y(), handPos.z(),
                         // Using the controller rotation below as the spread of the particle works well
-                        controllerDir.x(), controllerDir.y(), controllerDir.z()
+                        handDir.x(), handDir.y(), handDir.z()
                     );
 
                 }

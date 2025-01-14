@@ -29,7 +29,7 @@ public class HistoryVisualizerClientTick {
                 // (which is always history.ticksOfHistory() - 1) is the oldest known position.
                 float particleSize = (i + 1) * (1f / VRPoseHistory.MAX_TICKS_BACK);
                 VRPose entry = history.getHistoricalData(i); // Get the entry from our history
-                Vec3 entryPos = mode == HistoryVisualizer.VisualizerMode.HMD ? entry.getHMD().getPos() : entry.getController(mode.ordinal()).getPos(); // Get the position of said history entry
+                Vec3 entryPos = mode == HistoryVisualizer.VisualizerMode.HMD ? entry.getHMD().getPos() : entry.getHand(mode.ordinal()).getPos(); // Get the position of said history entry
                 entity.level().addParticle(
                         new DustParticleOptions(new Vector3f(1f, 0.5f, 0f), particleSize),
                         entryPos.x(), entryPos.y(), entryPos.z(),
