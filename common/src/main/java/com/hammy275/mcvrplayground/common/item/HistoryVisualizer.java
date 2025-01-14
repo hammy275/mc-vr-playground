@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import org.vivecraft.api.client.VivecraftClientAPI;
+import org.vivecraft.api.client.VRClientAPI;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class HistoryVisualizer extends Item {
 
         // Check that we are on the client side and that the player is in VR before attempting to visualize history
         if (entity.level().isClientSide &&
-                VivecraftClientAPI.getInstance().isVRActive()) {
+                VRClientAPI.getInstance().isVRActive()) {
             HistoryVisualizerClientTick.tick(itemStack, entity); // Do the actual logic
         }
     }

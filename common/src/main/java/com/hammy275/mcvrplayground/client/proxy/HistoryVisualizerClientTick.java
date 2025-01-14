@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
-import org.vivecraft.api.client.VivecraftClientAPI;
+import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.client.data.VRPoseHistory;
 import org.vivecraft.api.data.VRPose;
 
@@ -21,7 +21,7 @@ public class HistoryVisualizerClientTick {
             // Item stores which device (HMD or a controller) we're visualizing in its NBT data
             HistoryVisualizer.VisualizerMode mode = HistoryVisualizer.getMode(itemStack);
 
-            VRPoseHistory history = VivecraftClientAPI.getInstance().getHistoricalVRPoses();
+            VRPoseHistory history = VRClientAPI.getInstance().getHistoricalVRPoses();
 
             for (int i = 0; i < history.ticksOfHistory(); i++) {
                 // This makes the particle larger the farther it is away from the player.
