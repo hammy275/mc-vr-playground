@@ -13,6 +13,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.vivecraft.api.client.VRClientAPI;
+import org.vivecraft.api.data.VRBodyPart;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class HistoryVisualizer extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        nextMode(player.getItemInHand(interactionHand), player);
+        nextBodyPart(player.getItemInHand(interactionHand), player);
         return InteractionResultHolder.success(player.getItemInHand(interactionHand));
 
     }
@@ -45,40 +46,36 @@ public class HistoryVisualizer extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
         // Displays a useful description in-game
-        list.add(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing." + getMode(itemStack).ordinal()));
+        list.add(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)));
         list.add(Component.translatable("item.mc_vr_playground.history_visualizer.right_click"));
         super.appendHoverText(itemStack, level, list, tooltipFlag);
     }
 
-    private static void nextMode(ItemStack itemStack, Player player) {
-        int newMode = getMode(itemStack).ordinal() + 1;
-        if (newMode == VisualizerMode.values().length) {
-            newMode = 0;
+    private static void nextBodyPart(ItemStack itemStack, Player player) {
+        int newBodyPart = getBodyPart(itemStack).ordinal() + 1;
+        if (newBodyPart == VRBodyPart.values().length) {
+            newBodyPart = 0;
         }
 
         CompoundTag nbt = itemStack.getTag();
         if (nbt == null) {
             nbt = new CompoundTag();
         }
-        nbt.putInt(MODE_KEY, newMode);
+        nbt.putInt(MODE_KEY, newBodyPart);
         itemStack.setTag(nbt);
 
         if (player.level().isClientSide) {
-            player.sendSystemMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing." + newMode));
+            player.sendSystemMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)));
         }
     }
 
-    public static VisualizerMode getMode(ItemStack itemStack) {
+    public static VRBodyPart getBodyPart(ItemStack itemStack) {
         // Get the current device being visualized from NBT, with a default of controller 0 if not set.
         CompoundTag nbt = itemStack.getTag();
         if (nbt == null || !nbt.contains(MODE_KEY)) {
-            return VisualizerMode.Controller0;
+            return VRBodyPart.HMD;
         }
         // Modulo 3 so invalid values set by commands give us something sensible
-        return VisualizerMode.values()[nbt.getInt(MODE_KEY) % 3];
-    }
-
-    public enum VisualizerMode {
-        Controller0, Controller1, HMD
+        return VRBodyPart.values()[nbt.getInt(MODE_KEY) % VRBodyPart.values().length];
     }
 }

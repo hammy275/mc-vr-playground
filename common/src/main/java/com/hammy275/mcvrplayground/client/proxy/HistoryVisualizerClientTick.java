@@ -9,6 +9,8 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.client.data.VRPoseHistory;
+import org.vivecraft.api.data.VRBodyPart;
+import org.vivecraft.api.data.VRBodyPartData;
 import org.vivecraft.api.data.VRPose;
 
 public class HistoryVisualizerClientTick {
@@ -19,7 +21,7 @@ public class HistoryVisualizerClientTick {
         // done in HistoryVisualizer.java
         if (entity == Minecraft.getInstance().player && entity.tickCount % 10 == 0) {
             // Item stores which device (HMD or a controller) we're visualizing in its NBT data
-            HistoryVisualizer.VisualizerMode mode = HistoryVisualizer.getMode(itemStack);
+            VRBodyPart part = HistoryVisualizer.getBodyPart(itemStack);
 
             VRPoseHistory history = VRClientAPI.getInstance().getHistoricalVRPoses();
 
@@ -28,13 +30,16 @@ public class HistoryVisualizerClientTick {
                 // Remember that index 0 of history is the newest while the last index
                 // (which is always history.ticksOfHistory() - 1) is the oldest known position.
                 float particleSize = (i + 1) * (1f / VRPoseHistory.MAX_TICKS_BACK);
-                VRPose entry = history.getHistoricalData(i); // Get the entry from our history
-                Vec3 entryPos = mode == HistoryVisualizer.VisualizerMode.HMD ? entry.getHMD().getPos() : entry.getHand(mode.ordinal()).getPos(); // Get the position of said history entry
-                entity.level().addParticle(
-                        new DustParticleOptions(new Vector3f(1f, 0.5f, 0f), particleSize),
-                        entryPos.x(), entryPos.y(), entryPos.z(),
-                        0, 0, 0
-                ); // Add a particle there
+                VRPose pose = history.getHistoricalData(i); // Get the entry from our history
+                VRBodyPartData entry = pose.getBodyPartData(part); // Get the position of said history entry
+                if (entry != null) {
+                    Vec3 entryPos = entry.getPos();
+                    entity.level().addParticle(
+                            new DustParticleOptions(new Vector3f(1f, 0.5f, 0f), particleSize),
+                            entryPos.x(), entryPos.y(), entryPos.z(),
+                            0, 0, 0
+                    ); // Add a particle there
+                }
             }
         }
     }
