@@ -1,0 +1,105 @@
+package com.hammy275.mcvrplayground.common.item;
+
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+import org.vivecraft.api.VRAPI;
+import org.vivecraft.api.data.FBTMode;
+import org.vivecraft.api.data.VRBodyPart;
+import org.vivecraft.api.data.VRPose;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
+public class OtherVRPlayerVisualizer extends Item {
+
+    private static final String DATA_KEY = "other_vr_player_data";
+
+    // Usually, one would want to store this in the NBT/data components of the item. However, since
+    // we're testing client functionality here, I'm just storing this in a map on the client. This
+    // does lead to several bugs (data saved between worlds, all item stacks "holding" the same
+    // data, etc.) but we're just testing specific functionality, so I'm okay with that.
+    private static final Map<VRBodyPart, Vec3> bodyPartPositions = new EnumMap<>(VRBodyPart.class);
+
+    public OtherVRPlayerVisualizer(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        // Item is meant to test getting other VR players from the client, so we run client-only
+        if (player.level().isClientSide) {
+            // Gets nearby players that aren't us that are in VR.
+            List<Entity> nearbyPlayers = level.getEntities(player, AABB.ofSize(player.position(), 16, 16, 16),
+                    e -> e instanceof Player p && VRAPI.getInstance().isVRPlayer(p));
+            // Bail early if none are found.
+            if (nearbyPlayers.isEmpty()) {
+                player.sendSystemMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"));
+                return InteractionResultHolder.fail(itemStack);
+            }
+            // Get the first player found in the list. May not necessarily be the nearest, but that's okay.
+            Player target = (Player) nearbyPlayers.get(0);
+            // Get the pose of all body parts of the player.
+            VRPose pose = VRAPI.getInstance().getVRPose(target);
+            // pose is not null since the player was checked to be in VR, so this is safe.
+            FBTMode fbtMode = pose.getFBTMode();
+            // Clear the map we store positions in.
+            bodyPartPositions.clear();
+            // For each possible body part
+            for (VRBodyPart vrBodyPart : VRBodyPart.values()) {
+                // Check if that body part is available in the FBT mode the player is in.
+                if (fbtMode.bodyPartAvailable(vrBodyPart)) {
+                    // If it is, add it to our map of body parts to positions.
+                    // Since the body part is available, the body part data is guaranteed to not be null.
+                    bodyPartPositions.put(vrBodyPart, pose.getBodyPartData(vrBodyPart).getPos());
+                }
+            }
+            // We successfully captured data from a VR user.
+            player.sendSystemMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.success", target.getScoreboardName()));
+            return InteractionResultHolder.success(itemStack);
+        } else {
+            // Just pass on item use on the server.
+            return InteractionResultHolder.pass(itemStack);
+        }
+    }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+        super.inventoryTick(itemStack, level, entity, i, bl);
+        // For each body part and position we have stored
+        for (Map.Entry<VRBodyPart, Vec3> entry : bodyPartPositions.entrySet()) {
+            // Get a color for visualizing the body part for the player.
+            Vector3f color = switch (entry.getKey()) {
+                case HMD -> new Vector3f(1f, 1f, 1f); // White for HMD
+                case MAIN_HAND -> new Vector3f(0f, 0f, 1f); // Blue for main-hand
+                case OFF_HAND -> new Vector3f(1f, 0f, 0f); // Red for off-hand
+                default -> new Vector3f(0.5f, 0.5f, 0.5f); // Gray for other body parts
+            };
+            // Get the stored position.
+            Vec3 pos = entry.getValue();
+            // Add a dust particle at the position with the color.
+            level.addParticle(new DustParticleOptions(color, 1f),
+                    pos.x, pos.y, pos.z,
+                    0, 0, 0);
+        }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
+        list.add(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.desc"));
+        super.appendHoverText(itemStack, level, list, tooltipFlag);
+    }
+}

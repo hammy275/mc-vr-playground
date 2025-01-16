@@ -31,6 +31,8 @@ public class DebugInfoItem extends Item {
             player.sendSystemMessage(Component.literal("isVanillaRenderPass(): " + VRRenderingAPI.getInstance().isVanillaRenderPass()));
             player.sendSystemMessage(Component.literal("getCurrentRenderPass(): " + VRRenderingAPI.getInstance().getCurrentRenderPass()));
             player.sendSystemMessage(Component.literal("isFirstRenderPass(): " + VRRenderingAPI.getInstance().isFirstRenderPass()));
+            player.sendSystemMessage(Component.literal("getHandRenderPos(MAIN_HAND): " + VRRenderingAPI.getInstance().getHandRenderPos(InteractionHand.MAIN_HAND)));
+            player.sendSystemMessage(Component.literal("getHandRenderPos(OFF_HAND): " + VRRenderingAPI.getInstance().getHandRenderPos(InteractionHand.OFF_HAND)));
         } else {
             VRPose pose = VRAPI.getInstance().getVRPose(player);
             if (pose != null) { // If it's null, we weren't in VR according to the server.

@@ -17,5 +17,9 @@
   "item.mc_vr_playground.debug_info.not_in_vr": "Server thinks you are not in VR.",
   "item.mc_vr_playground.data_printer": "Data Printer",
   "item.mc_vr_playground.data_printer.begin": "Begin Data Print",
-  "item.mc_vr_playground.data_printer.end": "End Data Print"
+  "item.mc_vr_playground.data_printer.end": "End Data Print",
+  "item.mc_vr_playground.other_vr_player_visualizer": "VR Player Visualizer",
+  "item.mc_vr_playground.other_vr_player_visualizer.desc": "Captures the position of a nearby VR player and visualizes it.",
+  "item.mc_vr_playground.other_vr_player_visualizer.success": "Captured the position of %s!",
+  "item.mc_vr_playground.other_vr_player_visualizer.fail": "No nearby VR players to capture!"
 }
