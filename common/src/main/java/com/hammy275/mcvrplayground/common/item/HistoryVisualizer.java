@@ -75,7 +75,7 @@ public class HistoryVisualizer extends Item {
         if (nbt == null || !nbt.contains(MODE_KEY)) {
             return VRBodyPart.HMD;
         }
-        // Modulo 3 so invalid values set by commands give us something sensible
+        // Modulo by total number of body parts so invalid values give us something sensible
         return VRBodyPart.values()[nbt.getInt(MODE_KEY) % VRBodyPart.values().length];
     }
 }
