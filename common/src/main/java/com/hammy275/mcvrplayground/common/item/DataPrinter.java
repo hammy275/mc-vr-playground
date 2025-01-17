@@ -22,8 +22,8 @@ public class DataPrinter extends Item {
                 // "Print" all VRData retrieving functions from VRClientAPI.
                 // Note that VRData and the VRPoses they contain all have valid toString() implementations to give useful data.
                 player.sendSystemMessage(Component.translatable("item.mc_vr_playground.data_printer.begin"));
-                player.sendSystemMessage(Component.literal("getPreTickRoomData()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getPreTickRoomPose().toString()));
+                player.sendSystemMessage(Component.literal("getLatestRoomPose()").withStyle(ChatFormatting.UNDERLINE));
+                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getLatestRoomPose().toString()));
                 player.sendSystemMessage(Component.literal("getPostTickRoomData()").withStyle(ChatFormatting.UNDERLINE));
                 player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getPostTickRoomPose().toString()));
                 player.sendSystemMessage(Component.literal("getPreTickWorldData()").withStyle(ChatFormatting.UNDERLINE));
