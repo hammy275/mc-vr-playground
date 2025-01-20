@@ -36,5 +36,7 @@ public class ModItems {
             new DataPrinter(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> OTHER_VR_PLAYER_VISUALIZER = ITEMS.register("other_vr_player_visualizer", () ->
             new OtherVRPlayerVisualizer(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> ENERGY_BALL = ITEMS.register("energy_ball", () ->
+            new EnergyBallItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
 
 }

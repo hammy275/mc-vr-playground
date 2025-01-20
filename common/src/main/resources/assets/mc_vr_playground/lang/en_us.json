@@ -4,6 +4,7 @@
   "category.mc_vr_playground": "MC VR Playground",
 
   "entity.mc_vr_playground.magic_missile": "Magic Missile",
+  "entity.mc_vr_playground.energy_ball": "Energy Ball",
 
   "item.mc_vr_playground.history_visualizer": "History Visualizer",
   "item.mc_vr_playground.history_visualizer.right_click": "Use this item to change which device is visualized.",
@@ -21,5 +22,9 @@
   "item.mc_vr_playground.other_vr_player_visualizer": "VR Player Visualizer",
   "item.mc_vr_playground.other_vr_player_visualizer.desc": "Captures the position of a nearby VR player and visualizes it.",
   "item.mc_vr_playground.other_vr_player_visualizer.success": "Captured the position of %s!",
-  "item.mc_vr_playground.other_vr_player_visualizer.fail": "No nearby VR players to capture!"
+  "item.mc_vr_playground.other_vr_player_visualizer.fail": "No nearby VR players to capture!",
+  "item.mc_vr_playground.energy_ball": "Energy Ball",
+  "item.mc_vr_playground.energy_ball.desc.1": "Holding right-click to create an energy ball between your hands.",
+  "item.mc_vr_playground.energy_ball.desc.2": "Move your hands around the ball to grow it.",
+  "item.mc_vr_playground.energy_ball.desc.3": "Release right-click while moving your hands forward to shoot the ball."
 }

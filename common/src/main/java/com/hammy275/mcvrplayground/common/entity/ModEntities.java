@@ -16,4 +16,8 @@ public class ModEntities {
             "magic_missile", () -> EntityType.Builder.of(MagicMissileEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(10).build("magic_missile")
     );
+    public static final RegistrySupplier<EntityType<EnergyBallEntity>> energyBall = ENTITIES.register(
+            "energy_ball", () -> EntityType.Builder.of(EnergyBallEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(10).build("energy_ball")
+    );
 }

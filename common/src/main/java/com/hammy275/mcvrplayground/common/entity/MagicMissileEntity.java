@@ -9,7 +9,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
@@ -20,9 +19,10 @@ import org.jetbrains.annotations.Nullable;
 import org.vivecraft.api.VRAPI;
 import org.vivecraft.api.data.VRBodyPartData;
 
-public class MagicMissileEntity extends Projectile implements ItemSupplier {
+public class MagicMissileEntity extends Projectile implements ScaledItemSupplier {
     public static final EntityDataAccessor<Float> ROLL = SynchedEntityData.defineId(MagicMissileEntity.class,
             EntityDataSerializers.FLOAT); // Using a FLOAT here since there's no built-in DOUBLE from Vanilla MC.
+    private static final ItemStack ITEM = new ItemStack(ModItems.MAGIC_MISSILE.get());
 
     public MagicMissileEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -114,6 +114,16 @@ public class MagicMissileEntity extends Projectile implements ItemSupplier {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(ModItems.MAGIC_MISSILE.get());
+        return ITEM;
+    }
+
+    @Override
+    public float getRoll() {
+        return this.getEntityData().get(ROLL);
+    }
+
+    @Override
+    public float getScale() {
+        return 1.5f;
     }
 }
