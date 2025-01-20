@@ -44,7 +44,7 @@ public class OtherVRPlayerVisualizer extends Item {
         if (player.level().isClientSide) {
             // Gets nearby players that aren't us that are in VR.
             List<Entity> nearbyPlayers = level.getEntities(player, AABB.ofSize(player.position(), 16, 16, 16),
-                    e -> e instanceof Player p && VRAPI.getInstance().isVRPlayer(p));
+                    e -> e instanceof Player p && VRAPI.instance().isVRPlayer(p));
             // Bail early if none are found.
             if (nearbyPlayers.isEmpty()) {
                 player.sendSystemMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"));
@@ -53,7 +53,7 @@ public class OtherVRPlayerVisualizer extends Item {
             // Get the first player found in the list. May not necessarily be the nearest, but that's okay.
             Player target = (Player) nearbyPlayers.get(0);
             // Get the pose of all body parts of the player.
-            VRPose pose = VRAPI.getInstance().getVRPose(target);
+            VRPose pose = VRAPI.instance().getVRPose(target);
             // pose is not null since the player was checked to be in VR, so this is safe.
             FBTMode fbtMode = pose.getFBTMode();
             // Clear the map we store positions in.

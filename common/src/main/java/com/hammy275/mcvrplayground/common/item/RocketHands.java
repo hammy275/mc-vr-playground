@@ -24,7 +24,7 @@ public class RocketHands extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        if (VRAPI.getInstance().isVRPlayer(player)) {
+        if (VRAPI.instance().isVRPlayer(player)) {
             player.startUsingItem(interactionHand);
         } else {
             // Fail if the player is NOT in VR and alert them that they're not in VR.
@@ -40,9 +40,9 @@ public class RocketHands extends Item {
         super.onUseTick(level, livingEntity, itemStack, ticksLeft);
 
         // Check that we have a player and that the player is in VR
-        if (livingEntity instanceof Player player && VRAPI.getInstance().isVRPlayer(player)) {
+        if (livingEntity instanceof Player player && VRAPI.instance().isVRPlayer(player)) {
             // Get VR-related data for the player
-            VRPose vrData = VRAPI.getInstance().getVRPose(player);
+            VRPose vrData = VRAPI.instance().getVRPose(player);
 
             // Get the direction both their controllers are pointing
             Vec3 mainHandDir = vrData.getMainHand().getRot();
@@ -63,7 +63,7 @@ public class RocketHands extends Item {
             if (player.level().isClientSide()) {
                 for (int controllerNum = 0; controllerNum <= 1; controllerNum++) { // Iterate over both controllers
                     // Rumble the controller
-                    VRClientAPI.getInstance().triggerHapticPulse(controllerNum, 0.05f);
+                    VRClientAPI.instance().triggerHapticPulse(controllerNum, 0.05f);
 
                     // Show particles coming out of the controller
                     Vec3 handPos = vrData.getHand(controllerNum).getPos();

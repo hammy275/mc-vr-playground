@@ -33,13 +33,13 @@ public class EnergyBallItem extends Item {
     @Override
     public void onUseTick(Level level, LivingEntity livingEntity, ItemStack itemStack, int i) {
         // Stop item usage if player switches out of VR, or we somehow have a non-player using the item.
-        if (livingEntity instanceof Player player && !VRAPI.getInstance().isVRPlayer(player) || !(livingEntity instanceof Player)) {
+        if (livingEntity instanceof Player player && !VRAPI.instance().isVRPlayer(player) || !(livingEntity instanceof Player)) {
             livingEntity.stopUsingItem();
         }
         Player player = (Player) livingEntity;
         if (player.level().isClientSide) { // Historical VR data is only available on the client.
             // Get the historical VR data
-            VRPoseHistory poseHistory = VRClientAPI.getInstance().getHistoricalVRPoses();
+            VRPoseHistory poseHistory = VRClientAPI.instance().getHistoricalVRPoses();
 
             // Get the average position over the past second of both the main-hand and the off-hand.
             Vec3 mainHandAveragePos = poseHistory.averagePosition(VRBodyPart.MAIN_HAND, 20);
@@ -68,8 +68,8 @@ public class EnergyBallItem extends Item {
 
     @Override
     public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i) {
-        if (livingEntity instanceof Player player && VRAPI.getInstance().isVRPlayer(player) && level.isClientSide) {
-            VRPoseHistory poseHistory = VRClientAPI.getInstance().getHistoricalVRPoses();
+        if (livingEntity instanceof Player player && VRAPI.instance().isVRPlayer(player) && level.isClientSide) {
+            VRPoseHistory poseHistory = VRClientAPI.instance().getHistoricalVRPoses();
 
             // Get the average velocity of each hand over the past few ticks.
             Vec3 mainHandVelocity = poseHistory.averageVelocity(VRBodyPart.MAIN_HAND, 5);
@@ -85,7 +85,7 @@ public class EnergyBallItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (VRAPI.getInstance().isVRPlayer(player)) {
+        if (VRAPI.instance().isVRPlayer(player)) {
             // Only let VR players use this item.
             player.startUsingItem(interactionHand);
             return InteractionResultHolder.consume(itemStack);

@@ -30,8 +30,8 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
 
     @Nullable
     public static MagicMissileEntity create(Player owner) {
-        if (VRAPI.getInstance().isVRPlayer(owner)) {
-            VRBodyPartData hand = VRAPI.getInstance().getVRPose(owner).getMainHand();
+        if (VRAPI.instance().isVRPlayer(owner)) {
+            VRBodyPartData hand = VRAPI.instance().getVRPose(owner).getMainHand();
 
             MagicMissileEntity missile = new MagicMissileEntity(ModEntities.magicMissile.get(), owner.level());
             // Move missile 1 block ahead of player's hand in the direction the hand is pointing
@@ -48,9 +48,9 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
     @Override
     public void tick() {
         super.tick();
-        if (this.getOwner() instanceof Player owner && VRAPI.getInstance().isVRPlayer(owner)) {
+        if (this.getOwner() instanceof Player owner && VRAPI.instance().isVRPlayer(owner)) {
             // Owner is online and in VR!
-            VRBodyPartData hand = VRAPI.getInstance().getVRPose(owner).getMainHand();
+            VRBodyPartData hand = VRAPI.instance().getVRPose(owner).getMainHand();
             // Set the roll value of this entity to the roll of the controller
             this.entityData.set(ROLL, (float) hand.getRoll()); // This is cast to float, since ROLL expects a float
             // Move 0.2 blocks in direction that hand is pointing

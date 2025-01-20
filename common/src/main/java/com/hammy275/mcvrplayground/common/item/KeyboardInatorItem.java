@@ -15,9 +15,9 @@ public class KeyboardInatorItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        boolean inVR = VRClientAPI.getInstance().isVRActive();
+        boolean inVR = VRClientAPI.instance().isVRActive();
         if (inVR) {
-            VRClientAPI.getInstance().setKeyboardState(true);
+            VRClientAPI.instance().setKeyboardState(true);
         }
         return inVR ? InteractionResultHolder.success(player.getItemInHand(interactionHand)) :
                 InteractionResultHolder.pass(player.getItemInHand(interactionHand));

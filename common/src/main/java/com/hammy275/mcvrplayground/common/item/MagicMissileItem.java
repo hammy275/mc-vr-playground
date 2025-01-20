@@ -17,7 +17,7 @@ public class MagicMissileItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        if (VRAPI.getInstance().isVRPlayer(player)) {
+        if (VRAPI.instance().isVRPlayer(player)) {
             MagicMissileEntity.create(player);
             player.getCooldowns().addCooldown(this, 100);
             return InteractionResultHolder.success(player.getItemInHand(interactionHand));

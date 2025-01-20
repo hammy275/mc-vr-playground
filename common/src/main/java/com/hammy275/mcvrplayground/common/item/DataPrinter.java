@@ -18,20 +18,20 @@ public class DataPrinter extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         if (player.level().isClientSide) {
-            if (VRClientAPI.getInstance().isVRActive()) {
+            if (VRClientAPI.instance().isVRActive()) {
                 // "Print" all VRData retrieving functions from VRClientAPI.
                 // Note that VRData and the VRPoses they contain all have valid toString() implementations to give useful data.
                 player.sendSystemMessage(Component.translatable("item.mc_vr_playground.data_printer.begin"));
                 player.sendSystemMessage(Component.literal("getLatestRoomPose()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getLatestRoomPose().toString()));
+                player.sendSystemMessage(Component.literal(VRClientAPI.instance().getLatestRoomPose().toString()));
                 player.sendSystemMessage(Component.literal("getPostTickRoomData()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getPostTickRoomPose().toString()));
+                player.sendSystemMessage(Component.literal(VRClientAPI.instance().getPostTickRoomPose().toString()));
                 player.sendSystemMessage(Component.literal("getPreTickWorldData()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getPreTickWorldPose().toString()));
+                player.sendSystemMessage(Component.literal(VRClientAPI.instance().getPreTickWorldPose().toString()));
                 player.sendSystemMessage(Component.literal("getPostTickWorldData()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getPostTickWorldPose().toString()));
+                player.sendSystemMessage(Component.literal(VRClientAPI.instance().getPostTickWorldPose().toString()));
                 player.sendSystemMessage(Component.literal("getWorldRenderData()").withStyle(ChatFormatting.UNDERLINE));
-                player.sendSystemMessage(Component.literal(VRClientAPI.getInstance().getWorldRenderPose().toString()));
+                player.sendSystemMessage(Component.literal(VRClientAPI.instance().getWorldRenderPose().toString()));
                 player.sendSystemMessage(Component.translatable("item.mc_vr_playground.data_printer.end"));
             } else {
                 player.sendSystemMessage(Component.translatable("message.mc_vr_playground.not_in_vr"));

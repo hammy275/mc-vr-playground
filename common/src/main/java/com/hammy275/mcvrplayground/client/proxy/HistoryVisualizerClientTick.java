@@ -23,7 +23,7 @@ public class HistoryVisualizerClientTick {
             // Item stores which device (HMD or a controller) we're visualizing in its NBT data
             VRBodyPart part = HistoryVisualizer.getBodyPart(itemStack);
 
-            VRPoseHistory history = VRClientAPI.getInstance().getHistoricalVRPoses();
+            VRPoseHistory history = VRClientAPI.instance().getHistoricalVRPoses();
 
             for (int i = 0; i < history.ticksOfHistory(); i++) {
                 // This makes the particle larger the farther it is away from the player.

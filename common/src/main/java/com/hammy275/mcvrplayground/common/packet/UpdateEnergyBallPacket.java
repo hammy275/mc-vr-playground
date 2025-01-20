@@ -26,7 +26,7 @@ public record UpdateEnergyBallPacket(Vec3 vec, Type type) {
         context.get().queue(() -> {
             Player ctxPlayer = context.get().getPlayer();
             // Client sent us a packet to update or create an energy ball and they're in VR.
-            if (ctxPlayer instanceof ServerPlayer player && VRAPI.getInstance().isVRPlayer(player)) {
+            if (ctxPlayer instanceof ServerPlayer player && VRAPI.instance().isVRPlayer(player)) {
                 // Check that the new ball position is within a reasonable distance of the player.
                 if (vec.distanceToSqr(player.getEyePosition()) > 3 * 3 && this.type != Type.SHOOT) {
                     return;
