@@ -29,7 +29,7 @@ public class HistoryVisualizerClientTick {
                 // This makes the particle larger the farther it is away from the player.
                 // Remember that index 0 of history is the newest while the last index
                 // (which is always history.ticksOfHistory() - 1) is the oldest known position.
-                float particleSize = (i + 1) * (1f / VRPoseHistory.MAX_TICKS_BACK);
+                float particleSize = (i + 1) * (1f / history.ticksOfHistory());
                 VRPose pose = history.getHistoricalData(i); // Get the entry from our history
                 VRBodyPartData entry = pose.getBodyPartData(part); // Get the position of said history entry
                 if (entry != null) {
