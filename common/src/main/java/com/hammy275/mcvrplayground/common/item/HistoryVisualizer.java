@@ -60,7 +60,7 @@ public class HistoryVisualizer extends Item {
         itemStack.set(ModComponents.HISTORY_VISUALIZER_COMPONENT.get(), newBodyPart);
 
         if (player.level().isClientSide) {
-            player.displayClientMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)), true);
+            player.displayClientMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)), false);
         }
     }
 

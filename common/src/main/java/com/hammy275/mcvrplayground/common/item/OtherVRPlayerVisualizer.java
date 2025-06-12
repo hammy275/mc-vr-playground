@@ -45,7 +45,7 @@ public class OtherVRPlayerVisualizer extends Item {
                     e -> e instanceof Player p && VRAPI.instance().isVRPlayer(p));
             // Bail early if none are found.
             if (nearbyPlayers.isEmpty()) {
-                player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"), true);
+                player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"), false);
                 return InteractionResult.FAIL;
             }
             // Get the first player found in the list. May not necessarily be the nearest, but that's okay.
@@ -66,7 +66,7 @@ public class OtherVRPlayerVisualizer extends Item {
                 }
             }
             // We successfully captured data from a VR user.
-            player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.success", target.getScoreboardName()), true);
+            player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.success", target.getScoreboardName()), false);
             return InteractionResult.SUCCESS;
         } else {
             // Just pass on item use on the server.

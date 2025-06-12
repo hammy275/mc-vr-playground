@@ -29,7 +29,7 @@ public class RocketHands extends Item {
         } else {
             // Fail if the player is NOT in VR and alert them that they're not in VR.
             if (player.level().isClientSide()) {
-                player.displayClientMessage(Component.translatable("message.mc_vr_playground.not_in_vr"), true);
+                player.displayClientMessage(Component.translatable("message.mc_vr_playground.not_in_vr"), false);
             }
         }
         return InteractionResult.CONSUME;

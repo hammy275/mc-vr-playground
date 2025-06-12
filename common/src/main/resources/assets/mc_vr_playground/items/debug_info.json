@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "mc_vr_playground:item/debug_info"
+  }
+}
