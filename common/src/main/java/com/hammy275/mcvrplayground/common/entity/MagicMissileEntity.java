@@ -35,7 +35,7 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
 
             MagicMissileEntity missile = new MagicMissileEntity(ModEntities.magicMissile.get(), owner.level());
             // Move missile 1 block ahead of player's hand in the direction the hand is pointing
-            missile.setPos(hand.getPos().add(hand.getRot()));
+            missile.setPos(hand.getPos().add(hand.getDir()));
 
             missile.setOwner(owner);
             owner.level().addFreshEntity(missile);
@@ -54,9 +54,9 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
             // Set the roll value of this entity to the roll of the controller
             this.entityData.set(ROLL, (float) hand.getRoll()); // This is cast to float, since ROLL expects a float
             // Move 0.2 blocks in direction that hand is pointing
-            this.moveTo(this.position().add(hand.getRot().scale(0.2)));
+            this.moveTo(this.position().add(hand.getDir().scale(0.2)));
             // Set the delta movement for hit detection
-            this.setDeltaMovement(hand.getRot().scale(0.2));
+            this.setDeltaMovement(hand.getDir().scale(0.2));
         } else {
             this.discard(); // Remove if projectile owner is no longer online or leaves VR
         }
@@ -103,8 +103,8 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(ROLL, 0f);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(ROLL, 0f);
     }
 
     @Override

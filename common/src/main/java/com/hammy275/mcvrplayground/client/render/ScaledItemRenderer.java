@@ -6,39 +6,44 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 
 // Modified version of Mojang's ThrownItemRenderer
-public class ScaledItemRenderer<T extends Entity & ScaledItemSupplier> extends EntityRenderer<T> {
+public class ScaledItemRenderer<T extends Entity & ScaledItemSupplier> extends EntityRenderer<T, ScaledItemRendererState> {
 
-    private final ItemRenderer itemRenderer;
+    private final ItemModelResolver itemModelResolver;
 
     public ScaledItemRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.itemRenderer = context.getItemRenderer();
+        this.itemModelResolver = context.getItemModelResolver();
     }
 
     @Override
-    public void render(T projectile, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public ScaledItemRendererState createRenderState() {
+        return new ScaledItemRendererState();
+    }
+
+    @Override
+    public void extractRenderState(T entity, ScaledItemRendererState state, float f) {
+        super.extractRenderState(entity, state, f);
+        state.scale = entity.getScale();
+        state.roll = entity.getRoll();
+        this.itemModelResolver.updateForNonLiving(state.item, entity.getItem(), ItemDisplayContext.GROUND, entity);
+    }
+
+    @Override
+    public void render(ScaledItemRendererState state, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         poseStack.pushPose();
-        float scale = projectile.getScale();
-        poseStack.scale(scale, scale, scale);
+        poseStack.scale(state.scale, state.scale, state.scale);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         // Rotate by roll
-        poseStack.mulPose(Axis.ZN.rotation(projectile.getRoll()));
-        this.itemRenderer.renderStatic(projectile.getItem(), ItemDisplayContext.GROUND, i, OverlayTexture.NO_OVERLAY, poseStack, multiBufferSource, projectile.level(), projectile.getId());
+        poseStack.mulPose(Axis.ZN.rotation(state.roll));
+        state.item.render(poseStack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
-        super.render(projectile, f, g, poseStack, multiBufferSource, i);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(T entity) {
-        return TextureAtlas.LOCATION_BLOCKS; // Used for Vanilla's ThrownItemRenderer, so using that here, too
+        super.render(state, poseStack, multiBufferSource, i);
     }
 }

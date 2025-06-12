@@ -1,20 +1,18 @@
 package com.hammy275.mcvrplayground.common.item;
 
-import com.hammy275.mcvrplayground.MCVRPlayground;
 import com.hammy275.mcvrplayground.common.entity.EnergyBallEntity;
-import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacket;
+import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacketC2S;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 import org.vivecraft.api.VRAPI;
 import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.client.data.VRPoseHistory;
@@ -53,10 +51,10 @@ public class EnergyBallItem extends Item {
             double mainHandSpeed = poseHistory.averageSpeed(VRBodyPart.MAIN_HAND, 5);
             double offHandSpeed = poseHistory.averageSpeed(VRBodyPart.OFF_HAND, 5);
             // If both the main-hand and off-hand are moving faster than the threshold, grow the ball as well.
-            UpdateEnergyBallPacket.Type energyBallUpdateType = mainHandSpeed > GROW_SPEED_THRESHOLD && offHandSpeed > GROW_SPEED_THRESHOLD ?
-                    UpdateEnergyBallPacket.Type.GROW : UpdateEnergyBallPacket.Type.NO_GROW;
+            UpdateEnergyBallPacketC2S.State energyBallUpdateState = mainHandSpeed > GROW_SPEED_THRESHOLD && offHandSpeed > GROW_SPEED_THRESHOLD ?
+                    UpdateEnergyBallPacketC2S.State.GROW : UpdateEnergyBallPacketC2S.State.NO_GROW;
             // Let the server know of the changed ball position and whether to grow it.
-            MCVRPlayground.NETWORK.sendToServer(new UpdateEnergyBallPacket(handsCenterPos, energyBallUpdateType));
+            NetworkManager.sendToServer(new UpdateEnergyBallPacketC2S(handsCenterPos, energyBallUpdateState));
             // Also move the ball on our end.
             EnergyBallEntity.getNearbyBall(player).ifPresent(ball -> {
                 if (!ball.energyBallShot()) {
@@ -67,7 +65,7 @@ public class EnergyBallItem extends Item {
     }
 
     @Override
-    public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i) {
+    public boolean releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i) {
         if (livingEntity instanceof Player player && VRAPI.instance().isVRPlayer(player) && level.isClientSide) {
             VRPoseHistory poseHistory = VRClientAPI.instance().getHistoricalVRPoses();
 
@@ -78,35 +76,31 @@ public class EnergyBallItem extends Item {
             // the ball and the speed at which to move it.
             Vec3 handsVelocity = mainHandVelocity.add(offHandVelocity).scale(0.5);
             // Tell the server to shoot the energy ball with the supplied velocity
-            MCVRPlayground.NETWORK.sendToServer(new UpdateEnergyBallPacket(handsVelocity, UpdateEnergyBallPacket.Type.SHOOT));
+            NetworkManager.sendToServer(new UpdateEnergyBallPacketC2S(handsVelocity, UpdateEnergyBallPacketC2S.State.SHOOT));
         }
+        return false;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (VRAPI.instance().isVRPlayer(player)) {
             // Only let VR players use this item.
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(itemStack);
+            return InteractionResult.CONSUME;
         } else {
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
-        return 72000; // Vanilla uses 1 hour for items that can be used forever.
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
+        return 72000;
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack itemStack) {
-        return UseAnim.NONE; // No use animation, the creation of the energy ball entity is the signaling of usage.
-    }
-
-    @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
-        super.appendHoverText(itemStack, level, list, tooltipFlag);
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
         for (int i = 1; i <= 3; i++) {
             list.add(Component.translatable("item.mc_vr_playground.energy_ball.desc." + i));
         }

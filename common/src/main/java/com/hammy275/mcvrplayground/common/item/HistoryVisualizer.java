@@ -1,17 +1,16 @@
 package com.hammy275.mcvrplayground.common.item;
 
 import com.hammy275.mcvrplayground.client.proxy.HistoryVisualizerClientTick;
-import net.minecraft.nbt.CompoundTag;
+import com.hammy275.mcvrplayground.common.item.component.ModComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.data.VRBodyPart;
 
@@ -26,9 +25,9 @@ public class HistoryVisualizer extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         nextBodyPart(player.getItemInHand(interactionHand), player);
-        return InteractionResultHolder.success(player.getItemInHand(interactionHand));
+        return InteractionResult.SUCCESS;
 
     }
 
@@ -43,12 +42,13 @@ public class HistoryVisualizer extends Item {
         }
     }
 
+
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         // Displays a useful description in-game
         list.add(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)));
         list.add(Component.translatable("item.mc_vr_playground.history_visualizer.right_click"));
-        super.appendHoverText(itemStack, level, list, tooltipFlag);
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
     }
 
     private static void nextBodyPart(ItemStack itemStack, Player player) {
@@ -57,25 +57,20 @@ public class HistoryVisualizer extends Item {
             newBodyPart = 0;
         }
 
-        CompoundTag nbt = itemStack.getTag();
-        if (nbt == null) {
-            nbt = new CompoundTag();
-        }
-        nbt.putInt(MODE_KEY, newBodyPart);
-        itemStack.setTag(nbt);
+        itemStack.set(ModComponents.HISTORY_VISUALIZER_COMPONENT.get(), newBodyPart);
 
         if (player.level().isClientSide) {
-            player.sendSystemMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)));
+            player.displayClientMessage(Component.translatable("item.mc_vr_playground.history_visualizer.visualizing", getBodyPart(itemStack)), true);
         }
     }
 
     public static VRBodyPart getBodyPart(ItemStack itemStack) {
-        // Get the current device being visualized from NBT, with a default of controller 0 if not set.
-        CompoundTag nbt = itemStack.getTag();
-        if (nbt == null || !nbt.contains(MODE_KEY)) {
-            return VRBodyPart.HMD;
+        // Get the current device being visualized from the item components, with a default of controller 0 if not set.
+        Integer bodyPart = itemStack.get(ModComponents.HISTORY_VISUALIZER_COMPONENT.get());
+        if (bodyPart == null) {
+            bodyPart = 0;
         }
         // Modulo by total number of body parts so invalid values give us something sensible
-        return VRBodyPart.values()[nbt.getInt(MODE_KEY) % VRBodyPart.values().length];
+        return VRBodyPart.values()[bodyPart % VRBodyPart.values().length];
     }
 }

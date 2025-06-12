@@ -3,7 +3,7 @@ package com.hammy275.mcvrplayground.common.item;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -12,8 +12,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 import org.vivecraft.api.VRAPI;
 import org.vivecraft.api.data.FBTMode;
 import org.vivecraft.api.data.VRBodyPart;
@@ -38,7 +36,7 @@ public class OtherVRPlayerVisualizer extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         // Item is meant to test getting other VR players from the client, so we run client-only
         if (player.level().isClientSide) {
@@ -47,8 +45,8 @@ public class OtherVRPlayerVisualizer extends Item {
                     e -> e instanceof Player p && VRAPI.instance().isVRPlayer(p));
             // Bail early if none are found.
             if (nearbyPlayers.isEmpty()) {
-                player.sendSystemMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"));
-                return InteractionResultHolder.fail(itemStack);
+                player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.fail"), true);
+                return InteractionResult.FAIL;
             }
             // Get the first player found in the list. May not necessarily be the nearest, but that's okay.
             Player target = (Player) nearbyPlayers.get(0);
@@ -68,11 +66,11 @@ public class OtherVRPlayerVisualizer extends Item {
                 }
             }
             // We successfully captured data from a VR user.
-            player.sendSystemMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.success", target.getScoreboardName()));
-            return InteractionResultHolder.success(itemStack);
+            player.displayClientMessage(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.success", target.getScoreboardName()), true);
+            return InteractionResult.SUCCESS;
         } else {
             // Just pass on item use on the server.
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
     }
 
@@ -82,11 +80,11 @@ public class OtherVRPlayerVisualizer extends Item {
         // For each body part and position we have stored
         for (Map.Entry<VRBodyPart, Vec3> entry : bodyPartPositions.entrySet()) {
             // Get a color for visualizing the body part for the player.
-            Vector3f color = switch (entry.getKey()) {
-                case HMD -> new Vector3f(1f, 1f, 1f); // White for HMD
-                case MAIN_HAND -> new Vector3f(0f, 0f, 1f); // Blue for main-hand
-                case OFF_HAND -> new Vector3f(1f, 0f, 0f); // Red for off-hand
-                default -> new Vector3f(0.5f, 0.5f, 0.5f); // Gray for other body parts
+            int color = switch (entry.getKey()) {
+                case HEAD -> 0xFFFFFF; // White for HMD
+                case MAIN_HAND -> 0x0000FF; // Blue for main-hand
+                case OFF_HAND -> 0xFF0000; // Red for off-hand
+                default -> 0x7F7F7F; // Gray for other body parts
             };
             // Get the stored position.
             Vec3 pos = entry.getValue();
@@ -98,8 +96,8 @@ public class OtherVRPlayerVisualizer extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
         list.add(Component.translatable("item.mc_vr_playground.other_vr_player_visualizer.desc"));
-        super.appendHoverText(itemStack, level, list, tooltipFlag);
     }
 }

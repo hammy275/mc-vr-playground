@@ -6,7 +6,6 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.client.data.VRPoseHistory;
 import org.vivecraft.api.data.VRBodyPart;
@@ -35,7 +34,7 @@ public class HistoryVisualizerClientTick {
                 if (entry != null) {
                     Vec3 entryPos = entry.getPos();
                     entity.level().addParticle(
-                            new DustParticleOptions(new Vector3f(1f, 0.5f, 0f), particleSize),
+                            new DustParticleOptions(0xFF7F00, particleSize),
                             entryPos.x(), entryPos.y(), entryPos.z(),
                             0, 0, 0
                     ); // Add a particle there

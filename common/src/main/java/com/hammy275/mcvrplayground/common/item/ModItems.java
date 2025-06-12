@@ -1,6 +1,7 @@
 package com.hammy275.mcvrplayground.common.item;
 
 import com.hammy275.mcvrplayground.MCVRPlayground;
+import com.hammy275.mcvrplayground.common.item.component.ModComponents;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -27,7 +28,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> MAGIC_MISSILE = ITEMS.register("magic_missile", () ->
             new MagicMissileItem(new Item.Properties().arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> HISTORY_VISUALIZER = ITEMS.register("history_visualizer", () ->
-            new HistoryVisualizer(new Item.Properties().arch$tab(CREATIVE_TAB)));
+            new HistoryVisualizer(new Item.Properties().component(ModComponents.HISTORY_VISUALIZER_COMPONENT.get(), 0).arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> KEYBOARDINATOR = ITEMS.register("keyboardinator", () ->
             new KeyboardInatorItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)));
     public static final RegistrySupplier<Item> DEBUG_INFO = ITEMS.register("debug_info", () ->

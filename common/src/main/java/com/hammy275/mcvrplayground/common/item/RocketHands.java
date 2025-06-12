@@ -3,7 +3,7 @@ package com.hammy275.mcvrplayground.common.item;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,16 +23,16 @@ public class RocketHands extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         if (VRAPI.instance().isVRPlayer(player)) {
             player.startUsingItem(interactionHand);
         } else {
             // Fail if the player is NOT in VR and alert them that they're not in VR.
             if (player.level().isClientSide()) {
-                player.sendSystemMessage(Component.translatable("message.mc_vr_playground.not_in_vr"));
+                player.displayClientMessage(Component.translatable("message.mc_vr_playground.not_in_vr"), true);
             }
         }
-        return InteractionResultHolder.consume(player.getItemInHand(interactionHand));
+        return InteractionResult.CONSUME;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class RocketHands extends Item {
             VRPose vrData = VRAPI.instance().getVRPose(player);
 
             // Get the direction both their controllers are pointing
-            Vec3 mainHandDir = vrData.getMainHand().getRot();
-            Vec3 offHandDir = vrData.getOffHand().getRot();
+            Vec3 mainHandDir = vrData.getMainHand().getDir();
+            Vec3 offHandDir = vrData.getOffHand().getDir();
 
             // Decrease the magnitude of and flip the direction of where the controllers are pointing
             Vec3 c0DeltaMovementAdd = mainHandDir.scale(ROCKET_MULT);
@@ -67,7 +67,7 @@ public class RocketHands extends Item {
 
                     // Show particles coming out of the controller
                     Vec3 handPos = vrData.getHand(controllerNum).getPos();
-                    Vec3 handDir = vrData.getHand(controllerNum).getRot();
+                    Vec3 handDir = vrData.getHand(controllerNum).getDir();
 
                     for (int j = 0; j < 4; j++) { // Add 4 smoke particles
                         player.level().addParticle(
@@ -92,7 +92,7 @@ public class RocketHands extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
         return 72000;
     }
 }

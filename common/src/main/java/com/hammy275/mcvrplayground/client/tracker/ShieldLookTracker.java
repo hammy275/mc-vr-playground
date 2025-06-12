@@ -57,13 +57,13 @@ public class ShieldLookTracker implements Tracker, ItemInUseTracker {
         VRPose pose = VRClientAPI.instance().getPreTickWorldPose();
         // Get the direction the HMD is facing, which is the direction the player is looking
         VRBodyPartData hmdData = pose.getHMD();
-        Vec3 hmdRot = hmdData.getRot();
+        Vec3 hmdRot = hmdData.getDir();
         // For each hand holding a shield
         for (InteractionHand hand : InteractionHand.values()) {
             if (localPlayer.getItemInHand(hand).is(Items.SHIELD)) {
                 // Get the direction that hand is facing
                 VRBodyPartData handData = pose.getHand(hand);
-                Vec3 handRot = handData.getRot();
+                Vec3 handRot = handData.getDir();
                 // Get the difference in angles between the direction the player is looking (the HMD) and the direction
                 // the hand with the shield is pointing.
                 double angle = Math.acos(hmdRot.dot(handRot));

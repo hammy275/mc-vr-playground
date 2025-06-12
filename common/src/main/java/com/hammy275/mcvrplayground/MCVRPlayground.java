@@ -2,21 +2,21 @@ package com.hammy275.mcvrplayground;
 
 import com.hammy275.mcvrplayground.common.entity.ModEntities;
 import com.hammy275.mcvrplayground.common.item.ModItems;
-import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacket;
-import dev.architectury.networking.NetworkChannel;
-import net.minecraft.resources.ResourceLocation;
+import com.hammy275.mcvrplayground.common.item.component.ModComponents;
+import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacketC2S;
+import dev.architectury.networking.NetworkManager;
 
 public class MCVRPlayground {
 
     public static final String MOD_ID = "mc_vr_playground";
 
-    public static final NetworkChannel NETWORK = NetworkChannel.create(new ResourceLocation(MOD_ID, "network"));
-
     public static void init() {
+        ModComponents.COMPONENTS.register();
         ModItems.TABS.register();
         ModItems.ITEMS.register();
         ModEntities.ENTITIES.register();
 
-        NETWORK.register(UpdateEnergyBallPacket.class, UpdateEnergyBallPacket::encode, UpdateEnergyBallPacket::new, UpdateEnergyBallPacket::handle);
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, UpdateEnergyBallPacketC2S.TYPE,
+                UpdateEnergyBallPacketC2S.STREAM_CODEC, UpdateEnergyBallPacketC2S::handle);
     }
 }

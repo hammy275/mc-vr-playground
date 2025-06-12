@@ -97,9 +97,9 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(SCALE, 0.5f);
-        this.entityData.define(SHOT, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(SCALE, 0.5f);
+        builder.define(SHOT, false);
     }
 
     public boolean energyBallShot() {
