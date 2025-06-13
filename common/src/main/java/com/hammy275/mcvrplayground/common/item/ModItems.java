@@ -55,5 +55,8 @@ public class ModItems {
     public static final RegistrySupplier<Item> ENERGY_BALL = ITEMS.register("energy_ball", () ->
             new EnergyBallItem(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)
                     .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MCVRPlayground.MOD_ID, "energy_ball")))));
+    public static final RegistrySupplier<Item> RAINBOW_TRAIL = ITEMS.register("rainbow_trail", () ->
+            new RainbowTrail(new Item.Properties().stacksTo(1).arch$tab(CREATIVE_TAB)
+                    .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MCVRPlayground.MOD_ID, "rainbow_trail")))));
 
 }

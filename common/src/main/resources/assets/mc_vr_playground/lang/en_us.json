@@ -26,5 +26,8 @@
   "item.mc_vr_playground.energy_ball": "Energy Ball",
   "item.mc_vr_playground.energy_ball.desc.1": "Holding right-click to create an energy ball between your hands.",
   "item.mc_vr_playground.energy_ball.desc.2": "Move your hands around the ball to grow it.",
-  "item.mc_vr_playground.energy_ball.desc.3": "Release right-click while moving your hands forward to shoot the ball."
+  "item.mc_vr_playground.energy_ball.desc.3": "Release right-click while moving your hands forward to shoot the ball.",
+  "item.mc_vr_playground.rainbow_trail": "Rainbow Trail",
+  "item.mc_vr_playground.rainbow_trail.desc.1": "Hold to have a rainbow trail behind you.",
+  "item.mc_vr_playground.rainbow_trail.desc.2": "Particles are produced from the server's history!"
 }

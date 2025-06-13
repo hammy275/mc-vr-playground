@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.vivecraft.api.VRAPI;
 import org.vivecraft.api.client.VRClientAPI;
-import org.vivecraft.api.client.data.VRPoseHistory;
 import org.vivecraft.api.data.VRBodyPart;
+import org.vivecraft.api.data.VRPoseHistory;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ public class EnergyBallItem extends Item {
         // Stop item usage if player switches out of VR, or we somehow have a non-player using the item.
         if (livingEntity instanceof Player player && !VRAPI.instance().isVRPlayer(player) || !(livingEntity instanceof Player)) {
             livingEntity.stopUsingItem();
+            return;
         }
         Player player = (Player) livingEntity;
         if (player.level().isClientSide) { // Historical VR data is only available on the client.
