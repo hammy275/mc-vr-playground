@@ -12,7 +12,6 @@ public class MCVRPlaygroundClient {
 
     public static void init() {
         VRClientAPI.instance().registerTracker(shieldLookTracker);
-        VRClientAPI.instance().requestTicksOfHistory(20); // This mod only needs up to 20 ticks of history
 
         EntityRendererRegistry.register(ModEntities.magicMissile, ScaledItemRenderer::new);
         EntityRendererRegistry.register(ModEntities.energyBall, ScaledItemRenderer::new);

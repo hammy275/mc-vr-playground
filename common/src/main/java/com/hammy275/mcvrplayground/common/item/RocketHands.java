@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.vivecraft.api.VRAPI;
 import org.vivecraft.api.client.VRClientAPI;
+import org.vivecraft.api.data.VRBodyPart;
 import org.vivecraft.api.data.VRPose;
 
 public class RocketHands extends Item {
@@ -61,13 +62,13 @@ public class RocketHands extends Item {
             }
 
             if (player.level().isClientSide()) {
-                for (int controllerNum = 0; controllerNum <= 1; controllerNum++) { // Iterate over both controllers
+                for (InteractionHand hand : InteractionHand.values()) { // Iterate over both controllers
                     // Rumble the controller
-                    VRClientAPI.instance().triggerHapticPulse(controllerNum, 0.05f);
+                    VRClientAPI.instance().triggerHapticPulse(VRBodyPart.fromInteractionHand(hand), 0.05f);
 
                     // Show particles coming out of the controller
-                    Vec3 handPos = vrData.getHand(controllerNum).getPos();
-                    Vec3 handDir = vrData.getHand(controllerNum).getDir();
+                    Vec3 handPos = vrData.getHand(hand).getPos();
+                    Vec3 handDir = vrData.getHand(hand).getDir();
 
                     for (int j = 0; j < 4; j++) { // Add 4 smoke particles
                         player.level().addParticle(
