@@ -11,7 +11,7 @@ public class MCVRPlaygroundClient {
     public static final ShieldLookTracker shieldLookTracker = new ShieldLookTracker();
 
     public static void init() {
-        VRClientAPI.instance().registerTracker(shieldLookTracker);
+        VRClientAPI.instance().addRegistrationHandler(event -> event.registerTracker(shieldLookTracker));
 
         EntityRendererRegistry.register(ModEntities.magicMissile, ScaledItemRenderer::new);
         EntityRendererRegistry.register(ModEntities.energyBall, ScaledItemRenderer::new);
