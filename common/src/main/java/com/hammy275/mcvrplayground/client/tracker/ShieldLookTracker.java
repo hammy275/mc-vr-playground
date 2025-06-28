@@ -38,7 +38,7 @@ public class ShieldLookTracker implements Tracker, ItemInUseTracker {
     }
 
     @Override
-    public void doProcess(LocalPlayer localPlayer) {
+    public void activeProcess(LocalPlayer localPlayer) {
         // If the player has a shield they likely want to block with, start using that shield to block.
         Optional<InteractionHand> shieldHand = shieldToBlockWith(localPlayer);
         if (shieldHand.isPresent()) {
@@ -47,9 +47,8 @@ public class ShieldLookTracker implements Tracker, ItemInUseTracker {
     }
 
     @Override
-    public TrackerTickType tickType() {
-        // This Tracker only needs to run every game tick.
-        return TrackerTickType.PER_TICK;
+    public ProcessType processType() {
+        return ProcessType.PER_TICK;
     }
 
     private Optional<InteractionHand> shieldToBlockWith(LocalPlayer localPlayer) {
