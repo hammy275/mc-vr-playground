@@ -74,6 +74,11 @@ Utilizes pose data available on the server from `VRAPI` to visualize the pose of
 Utilizes the `VRPoseHistory` available from `VRAPI#getHistoricalVRPoses()` to visualize the position of a player from
 a few ticks ago.
 
+## [Rocket Hands](https://github.com/hammy275/mc-vr-playground/tree/1.21.4-vivecraftapi/common/src/main/java/com/hammy275/mcvrplayground/rocket_hands)
+
+Utilizes pose data available on both the server and client obtained from `VRAPI` to boost the player in a direction
+based on where the player's hands are pointed.
+
 ## [Shield Look](https://github.com/hammy275/mc-vr-playground/tree/1.21.4-vivecraftapi/common/src/main/java/com/hammy275/mcvrplayground/shield_look)
 
 Utilizes an `ItemInUseTracker` to cause a held shield to be used when pointed in a similar direction to where the player
