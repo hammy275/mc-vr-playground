@@ -15,6 +15,10 @@ import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.data.VRBodyPart;
 import org.vivecraft.api.data.VRPose;
 
+/**
+ * Item that provides rocket hands functionality. Like a jetpack, but each hand acts as half of the force applied
+ * to the player.
+ */
 public class RocketHands extends Item {
 
     private static final double ROCKET_MULT = -1d/16d; // Multiplier to scale the hand point direction by.
@@ -26,10 +30,11 @@ public class RocketHands extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         if (VRAPI.instance().isVRPlayer(player)) {
+            // Start using the item if in VR.
             player.startUsingItem(interactionHand);
         } else {
             // Fail if the player is NOT in VR and alert them that they're not in VR.
-            if (player.level().isClientSide()) {
+            if (player.level().isClientSide()) { // Use this check so the message is only displayed by one side.
                 player.displayClientMessage(Component.translatable("message.mc_vr_playground.not_in_vr"), false);
             }
         }
@@ -61,6 +66,7 @@ public class RocketHands extends Item {
                 player.resetFallDistance();
             }
 
+            // If on the client, perform some extra visual flair and rumble (triggerHapticPulse) the controllers.
             if (player.level().isClientSide()) {
                 for (InteractionHand hand : InteractionHand.values()) { // Iterate over both controllers
                     // Rumble the controller

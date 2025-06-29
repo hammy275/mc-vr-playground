@@ -18,6 +18,9 @@ import org.vivecraft.api.data.VRPoseHistory;
 
 import java.util.List;
 
+/**
+ * The item for the energy ball. The ball entity itself is {@link EnergyBallEntity}.
+ */
 public class EnergyBallItem extends Item {
 
     private static final double GROW_SPEED_THRESHOLD = 0.05;

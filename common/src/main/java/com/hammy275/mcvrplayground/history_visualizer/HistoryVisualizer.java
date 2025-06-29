@@ -15,9 +15,11 @@ import org.vivecraft.api.data.VRBodyPart;
 
 import java.util.List;
 
+/**
+ * Item used to visualize the position of individual VR body parts. See
+ * {@link HistoryVisualizerClientTick#tick(ItemStack, Entity)} for the actual visualization logic.
+ */
 public class HistoryVisualizer extends Item {
-
-    private static final String MODE_KEY = "visualizer_mode";
 
     public HistoryVisualizer(Properties properties) {
         super(properties);

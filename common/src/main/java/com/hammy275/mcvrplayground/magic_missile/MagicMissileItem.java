@@ -7,6 +7,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.vivecraft.api.VRAPI;
 
+/**
+ * Basic item used to shoot a magic missile. See {@link MagicMissileEntity} for the remaining logic.
+ */
 public class MagicMissileItem extends Item {
 
     public MagicMissileItem(Properties properties) {

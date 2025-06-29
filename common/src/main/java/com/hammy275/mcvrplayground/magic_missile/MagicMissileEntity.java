@@ -50,27 +50,31 @@ public class MagicMissileEntity extends Projectile implements ScaledItemSupplier
     @Override
     public void tick() {
         super.tick();
+        // Check that the owner is online and in VR
         if (this.getOwner() instanceof Player owner && VRAPI.instance().isVRPlayer(owner)) {
-            // Owner is online and in VR!
             VRBodyPartData hand = VRAPI.instance().getVRPose(owner).getMainHand();
-            // Set the roll value of this entity to the roll of the controller
-            this.entityData.set(ROLL, (float) hand.getRoll()); // This is cast to float, since ROLL expects a float
-            // Move 0.2 blocks in direction that hand is pointing
+            // Set the roll value of this entity to the roll of the controller.
+            // Since the entity data uses a float, not a double, we need to cast it.
+            this.entityData.set(ROLL, (float) hand.getRoll());
+            // Move 0.2 blocks in direction that hand is pointing.
             this.moveTo(this.position().add(hand.getDir().scale(0.2)));
-            // Set the delta movement for hit detection
+            // Set the delta movement, as although this code handles movement, the delta movement is used for
+            // hit detection by Minecraft's projectile code.
             this.setDeltaMovement(hand.getDir().scale(0.2));
         } else {
             this.discard(); // Remove if projectile owner is no longer online or leaves VR
         }
 
-
+        // Get the hit result for the movement of the projectile and perform a hit.
         HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hitResult.getType() != HitResult.Type.MISS && !this.isRemoved()) {
             this.onHit(hitResult);
         }
-        // Set the delta movement back to 0, since the position is directly controlled
+        // Set the delta movement back to 0, since the position is directly controlled, and we don't want vanilla
+        // to move the projectile on the next tick for us.
         this.setDeltaMovement(0, 0, 0);
 
+        // Spawn some particles to show the projectile trail.
         if (this.level().isClientSide) {
             int numParticles = this.random.nextInt(5);
             for (int i = 0; i < numParticles; i++) {

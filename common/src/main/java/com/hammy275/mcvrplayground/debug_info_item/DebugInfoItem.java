@@ -19,7 +19,9 @@ public class DebugInfoItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
-        if (player.level().isClientSide) { // Most data is always available on the client, even if the user isn't in VR
+        // Print a lot of available information that's available on the client and server to the chat.
+        if (player.level().isClientSide) {
+            // The client has access to a lot of data, all of which will return something, even if not in VR.
             player.displayClientMessage(Component.translatable("item.mc_vr_playground.debug_info.client_title").withStyle(ChatFormatting.UNDERLINE), false);
             player.displayClientMessage(Component.literal("isSeated(): " + VRClientAPI.instance().isSeated()), false);
             player.displayClientMessage(Component.literal("isLeftHanded(): " + VRClientAPI.instance().isLeftHanded()), false);
@@ -33,8 +35,10 @@ public class DebugInfoItem extends Item {
             player.displayClientMessage(Component.literal("getHandRenderPos(MAIN_HAND): " + VRRenderingAPI.instance().getHandRenderPos(InteractionHand.MAIN_HAND)), false);
             player.displayClientMessage(Component.literal("getHandRenderPos(OFF_HAND): " + VRRenderingAPI.instance().getHandRenderPos(InteractionHand.OFF_HAND)), false);
         } else {
+            // On the server, the data to print is only available when the user is in VR. The data we want is part of
+            // the player's VRPose, so we retrieve that and check that it's not null. If so, they're definitely in VR.
             VRPose pose = VRAPI.instance().getVRPose(player);
-            if (pose != null) { // If it's null, we weren't in VR according to the server.
+            if (pose != null) {
                 player.displayClientMessage(Component.translatable("item.mc_vr_playground.debug_info.server_title").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal("isSeated(): " + pose.isSeated()), false);
                 player.displayClientMessage(Component.literal("isLeftHanded(): " + pose.isLeftHanded()), false);

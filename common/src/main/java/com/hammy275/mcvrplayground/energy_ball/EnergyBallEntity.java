@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -22,6 +23,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The entity for the energy ball. The ball's position while charging is controlled by the energy ball item in
+ * {@link EnergyBallItem#onUseTick(Level, LivingEntity, ItemStack, int)}.
+ */
 public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
 
     public static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(EnergyBallEntity.class,
@@ -36,6 +41,13 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
         super(entityType, level);
     }
 
+    /**
+     * Creates a new energy ball entity from a player in VR.
+     *
+     * @param owner The VR player to create the energy ball for.
+     * @param centerPos The position to create the energy ball at.
+     * @return The created energy ball.
+     */
     public static EnergyBallEntity createFromVRPlayer(Player owner, Vec3 centerPos) {
         EnergyBallEntity energyBall = new EnergyBallEntity(ModEntities.energyBall.get(), owner.level());
         energyBall.setOwner(owner);
@@ -45,32 +57,42 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
         return energyBall;
     }
 
+    /**
+     * Get the nearest energy ball to the player that the player controls.
+     * <br>
+     * This is used to both control the position of a pre-existing ball and to make sure a player doesn't make
+     * more than one ball at a time.
+     *
+     * @param player The player to get the nearest energy ball for.
+     * @return The nearest energy ball that the provided player controls, or an empty {@link Optional} if no such ball
+     * exists.
+     */
     public static Optional<EnergyBallEntity> getNearbyBall(Player player) {
         List<EnergyBallEntity> energyBalls = player.level().getEntitiesOfClass(EnergyBallEntity.class,
                 AABB.ofSize(player.getEyePosition(), 10, 10, 10), ball -> ball.getOwner() == player);
-        return energyBalls.isEmpty() ? Optional.empty() : Optional.of(energyBalls.get(0));
+        return energyBalls.isEmpty() ? Optional.empty() : Optional.of(energyBalls.getFirst());
     }
 
     @Override
     public void tick() {
         super.tick();
         this.setPos(this.position().add(this.getDeltaMovement()));
-        // Handle hit detection like a projectile
+        // Handle hit detection like a projectile (as a point changing from the last tick to this tick).
         if (this.energyBallShot()) {
             HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
             if (hitResult.getType() != HitResult.Type.MISS && !this.isRemoved()) {
                 this.onHit(hitResult);
             }
-            // Handle hit detection for the entire hitbox as well
+            // Handle hit detection for the entire hitbox (the entire hitbox on only this tick.
             if (!this.isRemoved()) {
                 float scale = this.getScale();
                 List<Entity> entitiesInBox = this.level().getEntities(this.getOwner(), AABB.ofSize(this.getEyePosition(), scale, scale, scale),
                         this::canHitEntity);
                 if (!entitiesInBox.isEmpty()) {
-                    onHit(new EntityHitResult(entitiesInBox.get(0)));
+                    onHit(new EntityHitResult(entitiesInBox.getFirst()));
                 }
             }
-            // Discard if ball has been shot for 5 seconds, or it's moving very slowly
+            // Discard if ball has been shot for 5 seconds.
             if (++this.ticksShot > 100) {
                 this.discard();
             }
@@ -80,6 +102,7 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
+        // Discard the energy ball when it hits something.
         this.discard();
     }
 
@@ -100,8 +123,8 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(SCALE, 0.5f);
-        builder.define(SHOT, false);
+        builder.define(SCALE, 0.5f); // The energy ball grows the more its charged, increasing its scale.
+        builder.define(SHOT, false); // Whether the energy ball has been shot (true) or is still player-controlled (false)
     }
 
     public boolean energyBallShot() {
@@ -112,6 +135,11 @@ public class EnergyBallEntity extends Projectile implements ScaledItemSupplier {
         this.entityData.set(SCALE, Math.min(this.getScale() + 0.05f, 3f));
     }
 
+    /**
+     * Shoot the energy ball.
+     * @param shootVec The vector to shoot the ball at. Tracing this back through the packet originally sent, this
+     *                 is the average velocity of the main-hand and the off-hand from the past 5 ticks.
+     */
     public void shoot(Vec3 shootVec) {
         // Scale shootVec so it isn't too slow
         shootVec = shootVec.scale(10);

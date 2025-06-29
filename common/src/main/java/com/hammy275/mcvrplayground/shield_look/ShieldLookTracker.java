@@ -6,14 +6,19 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import org.vivecraft.api.client.ItemInUseTracker;
-import org.vivecraft.api.client.Tracker;
 import org.vivecraft.api.client.VRClientAPI;
 import org.vivecraft.api.data.VRBodyPartData;
 import org.vivecraft.api.data.VRPose;
 
 import java.util.Optional;
 
-public class ShieldLookTracker implements Tracker, ItemInUseTracker {
+/**
+ * Tracker used to demonstrate automatically holding up a shield when a hand holding a shield is aimed appropriately.
+ * <br>
+ * Gameplay-wise, this isn't great, as it can have many false positives, however it makes a good demonstration of
+ * how to use the tracker to perform a gameplay effect and for how to use the {@link ItemInUseTracker}.
+ */
+public class ShieldLookTracker implements ItemInUseTracker {
     @Override
     public boolean itemInUse(LocalPlayer localPlayer) {
         // Should continue using an item if the player has a shield they want to likely be blocking with

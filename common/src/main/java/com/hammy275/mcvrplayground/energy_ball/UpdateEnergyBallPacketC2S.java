@@ -13,6 +13,24 @@ import org.vivecraft.api.VRAPI;
 
 import java.util.Optional;
 
+/**
+ * Packet for updating the state of an energy ball. Sent while the energy ball item is being used.
+ * <br>
+ * Although the server has access to historical VR information, thus making the client-->server communication initially
+ * seem redundant, giving the client primary control has a couple advantages:
+ * <ul>
+ *     <li>The client dictating the position or release velocity helps to make the energy ball feel nicer, as
+ *         position or velocity data doesn't need to be sent by the server to the client. Instead, the client can perform
+ *         the action immediately and update the server on the new state.</li>
+ *     <li>Historical VR data from any source other than the client about the local player suffers from potential
+ *         issues surrounding network latency, such as the same data being used for multiple ticks of history due
+ *         to the server not receiving new data due to network lag.</li>
+ * </ul>
+ *
+ * @param vec The position of the energy ball if state is {@link State#GROW} or {@link State#NO_GROW}, or the velocity
+ *            to shoot the ball at if state is {@link State#SHOOT}.
+ * @param state The state to update the energy ball to.
+ */
 public record UpdateEnergyBallPacketC2S(Vec3 vec, State state) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<UpdateEnergyBallPacketC2S> TYPE =
@@ -65,7 +83,9 @@ public record UpdateEnergyBallPacketC2S(Vec3 vec, State state) implements Custom
     }
 
     public enum State {
-        NO_GROW, GROW, SHOOT;
+        NO_GROW, // Used when the player is still growing the energy ball but isn't moving their hands fast enough.
+        GROW, // Used when the player is growing the energy ball and is moving their hands fast enough.
+        SHOOT; // Used to denote the energy ball should be shot (released from player control).
 
         public static final StreamCodec<FriendlyByteBuf, State> STREAM_CODEC = StreamCodec.of(
                 (buffer, state) -> buffer.writeInt(state.ordinal()),
