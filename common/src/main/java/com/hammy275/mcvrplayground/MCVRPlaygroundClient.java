@@ -11,6 +11,7 @@ public class MCVRPlaygroundClient {
     public static final ShieldLookTracker shieldLookTracker = new ShieldLookTracker();
 
     public static void init() {
+        // Registers the ShieldLookTracker with Vivecraft.
         VRClientAPI.instance().addClientRegistrationHandler(event -> event.registerTrackers(shieldLookTracker));
 
         EntityRendererRegistry.register(ModEntities.magicMissile, ScaledItemRenderer::new);

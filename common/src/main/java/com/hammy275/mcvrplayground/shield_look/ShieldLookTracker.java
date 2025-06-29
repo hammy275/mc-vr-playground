@@ -16,7 +16,10 @@ import java.util.Optional;
  * Tracker used to demonstrate automatically holding up a shield when a hand holding a shield is aimed appropriately.
  * <br>
  * Gameplay-wise, this isn't great, as it can have many false positives, however it makes a good demonstration of
- * how to use the tracker to perform a gameplay effect and for how to use the {@link ItemInUseTracker}.
+ * how to use the {@link org.vivecraft.api.client.Tracker} to perform a gameplay effect and for how to use the
+ * {@link ItemInUseTracker}.
+ * <br>
+ * The tracker itself is registered in {@link com.hammy275.mcvrplayground.MCVRPlaygroundClient}.
  */
 public class ShieldLookTracker implements ItemInUseTracker {
     @Override
@@ -62,16 +65,17 @@ public class ShieldLookTracker implements ItemInUseTracker {
         // Get the direction the HMD is facing, which is the direction the player is looking
         VRBodyPartData hmdData = pose.getHead();
         Vec3 hmdRot = hmdData.getDir();
-        // For each hand holding a shield
+        // For each hand
         for (InteractionHand hand : InteractionHand.values()) {
+            // If the hand is holding a shield
             if (localPlayer.getItemInHand(hand).is(Items.SHIELD)) {
                 // Get the direction that hand is facing
                 VRBodyPartData handData = pose.getHand(hand);
                 Vec3 handRot = handData.getDir();
-                // Get the difference in angles between the direction the player is looking (the HMD) and the direction
+                // Get the difference in angles between the direction the player is looking (the HEAD) and the direction
                 // the hand with the shield is pointing.
                 double angle = Math.acos(hmdRot.dot(handRot));
-                // If the difference is small, then the user likely wants to block a mob with that hand.
+                // If the difference is small, then the user likely wants to block with that hand.
                 if (angle < Math.PI / 6) {
                     return Optional.of(hand);
                 }

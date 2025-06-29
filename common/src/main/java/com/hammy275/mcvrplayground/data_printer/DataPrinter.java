@@ -23,13 +23,13 @@ public class DataPrinter extends Item {
                 player.displayClientMessage(Component.translatable("item.mc_vr_playground.data_printer.begin"), false);
                 player.displayClientMessage(Component.literal("getLatestRoomPose()").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal(VRClientAPI.instance().getLatestRoomPose().toString()), false);
-                player.displayClientMessage(Component.literal("getPostTickRoomData()").withStyle(ChatFormatting.UNDERLINE), false);
+                player.displayClientMessage(Component.literal("getPostTickRoomPose()").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal(VRClientAPI.instance().getPostTickRoomPose().toString()), false);
-                player.displayClientMessage(Component.literal("getPreTickWorldData()").withStyle(ChatFormatting.UNDERLINE), false);
+                player.displayClientMessage(Component.literal("getPreTickWorldPose()").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal(VRClientAPI.instance().getPreTickWorldPose().toString()), false);
-                player.displayClientMessage(Component.literal("getPostTickWorldData()").withStyle(ChatFormatting.UNDERLINE), false);
+                player.displayClientMessage(Component.literal("getPostTickWorldPose()").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal(VRClientAPI.instance().getPostTickWorldPose().toString()), false);
-                player.displayClientMessage(Component.literal("getWorldRenderData()").withStyle(ChatFormatting.UNDERLINE), false);
+                player.displayClientMessage(Component.literal("getWorldRenderPose()").withStyle(ChatFormatting.UNDERLINE), false);
                 player.displayClientMessage(Component.literal(VRClientAPI.instance().getWorldRenderPose().toString()), false);
                 player.displayClientMessage(Component.translatable("item.mc_vr_playground.data_printer.end"), false);
             } else {

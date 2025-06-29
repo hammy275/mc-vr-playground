@@ -22,6 +22,8 @@ public class DebugInfoItem extends Item {
         // Print a lot of available information that's available on the client and server to the chat.
         if (player.level().isClientSide) {
             // The client has access to a lot of data, all of which will return something, even if not in VR.
+            // Note that the printing of rendering information here isn't helpful in practice, since this code runs
+            // outside of frame rendering.
             player.displayClientMessage(Component.translatable("item.mc_vr_playground.debug_info.client_title").withStyle(ChatFormatting.UNDERLINE), false);
             player.displayClientMessage(Component.literal("isSeated(): " + VRClientAPI.instance().isSeated()), false);
             player.displayClientMessage(Component.literal("isLeftHanded(): " + VRClientAPI.instance().isLeftHanded()), false);
