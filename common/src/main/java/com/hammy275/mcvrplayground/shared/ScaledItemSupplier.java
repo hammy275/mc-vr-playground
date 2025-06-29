@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.entity;
+package com.hammy275.mcvrplayground.shared;
 
 import net.minecraft.world.entity.projectile.ItemSupplier;
 

@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.keyboardinator;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

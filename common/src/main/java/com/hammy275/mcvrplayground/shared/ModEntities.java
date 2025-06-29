@@ -1,6 +1,8 @@
-package com.hammy275.mcvrplayground.common.entity;
+package com.hammy275.mcvrplayground.shared;
 
 import com.hammy275.mcvrplayground.MCVRPlayground;
+import com.hammy275.mcvrplayground.energy_ball.EnergyBallEntity;
+import com.hammy275.mcvrplayground.magic_missile.MagicMissileEntity;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;

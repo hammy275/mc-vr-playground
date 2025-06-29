@@ -1,6 +1,5 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.magic_missile;
 
-import com.hammy275.mcvrplayground.common.entity.MagicMissileEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

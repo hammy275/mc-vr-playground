@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.rocket_hands;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;

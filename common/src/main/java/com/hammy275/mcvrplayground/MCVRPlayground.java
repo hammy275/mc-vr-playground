@@ -1,9 +1,9 @@
 package com.hammy275.mcvrplayground;
 
-import com.hammy275.mcvrplayground.common.entity.ModEntities;
-import com.hammy275.mcvrplayground.common.item.ModItems;
-import com.hammy275.mcvrplayground.common.item.component.ModComponents;
-import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacketC2S;
+import com.hammy275.mcvrplayground.shared.ModEntities;
+import com.hammy275.mcvrplayground.shared.ModItems;
+import com.hammy275.mcvrplayground.shared.ModComponents;
+import com.hammy275.mcvrplayground.energy_ball.UpdateEnergyBallPacketC2S;
 import dev.architectury.networking.NetworkManager;
 
 public class MCVRPlayground {

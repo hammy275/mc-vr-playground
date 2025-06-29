@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.client.render;
+package com.hammy275.mcvrplayground.shared;
 
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;

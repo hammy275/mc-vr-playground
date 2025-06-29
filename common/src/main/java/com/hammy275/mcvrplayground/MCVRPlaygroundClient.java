@@ -1,8 +1,8 @@
 package com.hammy275.mcvrplayground;
 
-import com.hammy275.mcvrplayground.client.tracker.ShieldLookTracker;
-import com.hammy275.mcvrplayground.common.entity.ModEntities;
-import com.hammy275.mcvrplayground.client.render.ScaledItemRenderer;
+import com.hammy275.mcvrplayground.shield_look.ShieldLookTracker;
+import com.hammy275.mcvrplayground.shared.ModEntities;
+import com.hammy275.mcvrplayground.shared.ScaledItemRenderer;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import org.vivecraft.api.client.VRClientAPI;
 

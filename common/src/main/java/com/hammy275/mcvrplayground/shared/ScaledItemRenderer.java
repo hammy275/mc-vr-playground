@@ -1,6 +1,5 @@
-package com.hammy275.mcvrplayground.client.render;
+package com.hammy275.mcvrplayground.shared;
 
-import com.hammy275.mcvrplayground.common.entity.ScaledItemSupplier;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

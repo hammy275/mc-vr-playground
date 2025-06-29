@@ -1,6 +1,8 @@
-package com.hammy275.mcvrplayground.common.entity;
+package com.hammy275.mcvrplayground.energy_ball;
 
-import com.hammy275.mcvrplayground.common.item.ModItems;
+import com.hammy275.mcvrplayground.shared.ModEntities;
+import com.hammy275.mcvrplayground.shared.ScaledItemSupplier;
+import com.hammy275.mcvrplayground.shared.ModItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

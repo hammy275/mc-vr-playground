@@ -1,7 +1,6 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.history_visualizer;
 
-import com.hammy275.mcvrplayground.client.proxy.HistoryVisualizerClientTick;
-import com.hammy275.mcvrplayground.common.item.component.ModComponents;
+import com.hammy275.mcvrplayground.shared.ModComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

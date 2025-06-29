@@ -1,6 +1,5 @@
-package com.hammy275.mcvrplayground.client.proxy;
+package com.hammy275.mcvrplayground.history_visualizer;
 
-import com.hammy275.mcvrplayground.common.item.HistoryVisualizer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.Entity;

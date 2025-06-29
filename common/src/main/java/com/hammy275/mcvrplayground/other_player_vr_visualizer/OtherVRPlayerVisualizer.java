@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.other_player_vr_visualizer;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;

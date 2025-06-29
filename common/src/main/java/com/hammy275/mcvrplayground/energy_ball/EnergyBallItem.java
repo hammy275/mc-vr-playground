@@ -1,7 +1,5 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.energy_ball;
 
-import com.hammy275.mcvrplayground.common.entity.EnergyBallEntity;
-import com.hammy275.mcvrplayground.common.packet.UpdateEnergyBallPacketC2S;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

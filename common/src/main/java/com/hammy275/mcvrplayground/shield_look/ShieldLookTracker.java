@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.client.tracker;
+package com.hammy275.mcvrplayground.shield_look;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.data_printer;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

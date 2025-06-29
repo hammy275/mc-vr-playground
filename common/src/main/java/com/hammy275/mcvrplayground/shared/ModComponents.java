@@ -1,4 +1,4 @@
-package com.hammy275.mcvrplayground.common.item.component;
+package com.hammy275.mcvrplayground.shared;
 
 import com.hammy275.mcvrplayground.MCVRPlayground;
 import com.mojang.serialization.Codec;

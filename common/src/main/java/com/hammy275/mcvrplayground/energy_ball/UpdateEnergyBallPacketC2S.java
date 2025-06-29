@@ -1,7 +1,6 @@
-package com.hammy275.mcvrplayground.common.packet;
+package com.hammy275.mcvrplayground.energy_ball;
 
 import com.hammy275.mcvrplayground.MCVRPlayground;
-import com.hammy275.mcvrplayground.common.entity.EnergyBallEntity;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

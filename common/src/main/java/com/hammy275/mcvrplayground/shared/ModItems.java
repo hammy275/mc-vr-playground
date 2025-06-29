@@ -1,7 +1,15 @@
-package com.hammy275.mcvrplayground.common.item;
+package com.hammy275.mcvrplayground.shared;
 
 import com.hammy275.mcvrplayground.MCVRPlayground;
-import com.hammy275.mcvrplayground.common.item.component.ModComponents;
+import com.hammy275.mcvrplayground.data_printer.DataPrinter;
+import com.hammy275.mcvrplayground.debug_info_item.DebugInfoItem;
+import com.hammy275.mcvrplayground.energy_ball.EnergyBallItem;
+import com.hammy275.mcvrplayground.history_visualizer.HistoryVisualizer;
+import com.hammy275.mcvrplayground.keyboardinator.KeyboardInatorItem;
+import com.hammy275.mcvrplayground.magic_missile.MagicMissileItem;
+import com.hammy275.mcvrplayground.other_player_vr_visualizer.OtherVRPlayerVisualizer;
+import com.hammy275.mcvrplayground.rainbow_trail.RainbowTrail;
+import com.hammy275.mcvrplayground.rocket_hands.RocketHands;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
